@@ -61,13 +61,6 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();*/
-                    /*Bill testBill = new Bill("Test 123", "Test bill", true, 1, new Date());
-                    BillTrackerApplication.getRealm().beginTransaction();
-                    BillTrackerApplication.getRealm().copyToRealmOrUpdate(testBill);
-                    BillTrackerApplication.getRealm().commitTransaction();*/
-
                     startActivity(new Intent(MainActivity.this, AddBillActivity.class));
                 }
             });
@@ -88,8 +81,8 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
     @Subscribe
     public void onBillSwiped(final BillSwipedEvent billSwipedEvent) {
-        Snackbar.make(coordinatorLayout, "Bill marked as paid!", Snackbar.LENGTH_LONG)
-                .setAction("Undo", new View.OnClickListener() {
+        Snackbar.make(coordinatorLayout, R.string.snackbar_bill_paid, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         BillTrackerApplication.getRealm().beginTransaction();
