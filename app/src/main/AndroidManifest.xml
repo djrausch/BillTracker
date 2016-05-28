@@ -19,8 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddBillActivity" />
-        <activity android:name=".ViewBillActivity"></activity>
+        <activity
+            android:name=".AddBillActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ViewBillActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
