@@ -9,9 +9,12 @@ import android.widget.TextView;
 
 import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.R;
+import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder;
 import com.djrausch.billtracker.models.Bill;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
 
@@ -46,9 +49,15 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
 
     @Override
     public void onItemDismiss(int position) {
+        Date oldDueDate = adapterData.get(position).dueDate;
+
+        Bill bill = adapterData.get(position);
+
         BillTrackerApplication.getRealm().beginTransaction();
-        adapterData.get(position).dueDate = new Date();
+        bill.dueDate = new Date();
         BillTrackerApplication.getRealm().commitTransaction();
+
+        EventBus.getDefault().post(new BillSwipedEvent(oldDueDate, bill));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements

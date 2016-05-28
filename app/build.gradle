@@ -34,4 +34,7 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
 
     compile 'com.bugsnag:bugsnag-android:+'
+
+    compile 'org.greenrobot:eventbus:3.0.0'
+
 }

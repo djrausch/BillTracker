@@ -3,6 +3,7 @@ package com.djrausch.billtracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
+import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
@@ -25,6 +27,9 @@ import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Date;
 
@@ -36,6 +41,9 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
     @BindView(R.id.main_recyclerview)
     RecyclerView recyclerView;
+
+    @BindView(R.id.coordinator)
+    CoordinatorLayout coordinatorLayout;
 
     MainRecyclerViewAdapter adapter;
     private ItemTouchHelper mItemTouchHelper;
@@ -78,6 +86,19 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
     }
 
+    @Subscribe
+    public void onBillSwiped(final BillSwipedEvent billSwipedEvent) {
+        Snackbar.make(coordinatorLayout, "Bill marked as paid!", Snackbar.LENGTH_LONG)
+                .setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BillTrackerApplication.getRealm().beginTransaction();
+                        billSwipedEvent.bill.dueDate = billSwipedEvent.oldDate;
+                        BillTrackerApplication.getRealm().commitTransaction();
+                    }
+                }).show();
+    }
+
     @NonNull
     @Override
     public MainPresenter createPresenter() {
@@ -114,5 +135,17 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         mItemTouchHelper.startDrag(viewHolder);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }
