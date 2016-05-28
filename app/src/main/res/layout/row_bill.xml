@@ -13,6 +13,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
+        android:background="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="4dp">
 
         <TextView

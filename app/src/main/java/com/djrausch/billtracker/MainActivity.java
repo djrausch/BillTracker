@@ -18,6 +18,7 @@ import android.view.MenuItem;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
 import com.djrausch.billtracker.events.BillSwipedEvent;
+import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
@@ -76,6 +77,15 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Intent i = new Intent(MainActivity.this, ViewBillActivity.class);
+                i.putExtra("bill_uuid", adapter.getItem(position).uuid);
+                startActivity(i);
+            }
+        });
 
     }
 
