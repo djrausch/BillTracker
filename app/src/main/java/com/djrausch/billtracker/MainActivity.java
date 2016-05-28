@@ -10,11 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
+import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
+import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.presenter.MainPresenter;
 import com.djrausch.billtracker.view.MainView;
@@ -29,12 +32,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.RealmResults;
 
-public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView {
+public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView, OnStartDragListener {
 
     @BindView(R.id.main_recyclerview)
     RecyclerView recyclerView;
 
     MainRecyclerViewAdapter adapter;
+    private ItemTouchHelper mItemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,11 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
         adapter = new MainRecyclerViewAdapter(this, bills);
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
+
     }
 
     @NonNull
@@ -100,5 +109,10 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     @Override
     public void showLoading(boolean loading) {
 
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
     }
 }

@@ -7,13 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.R;
+import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter;
+import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder;
 import com.djrausch.billtracker.models.Bill;
+
+import java.util.Date;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, MainRecyclerViewAdapter.ViewHolder> {
+public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, MainRecyclerViewAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
     public MainRecyclerViewAdapter(Context context, OrderedRealmCollection<Bill> bills) {
         super(context, bills);
@@ -34,12 +39,35 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         holder.name.setText(bill.toString());
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        return false;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        BillTrackerApplication.getRealm().beginTransaction();
+        adapterData.get(position).dueDate = new Date();
+        BillTrackerApplication.getRealm().commitTransaction();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements
+            ItemTouchHelperViewHolder {
         public TextView name;
 
         public ViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.name);
+        }
+
+        @Override
+        public void onItemSelected() {
+
+        }
+
+        @Override
+        public void onItemClear() {
+
         }
     }
 }
