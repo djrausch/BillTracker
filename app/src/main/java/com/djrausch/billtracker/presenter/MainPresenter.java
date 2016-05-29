@@ -9,6 +9,6 @@ import io.realm.RealmResults;
 
 public class MainPresenter extends MvpBasePresenter<MainView> {
     public RealmResults<Bill> loadBills() {
-        return BillTrackerApplication.getRealm().where(Bill.class).findAllSorted("dueDate");
+        return BillTrackerApplication.getRealm().where(Bill.class).findAllSortedAsync("dueDate");
     }
 }
