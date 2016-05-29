@@ -17,6 +17,8 @@ import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.util.Date;
 
@@ -41,7 +43,11 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
     public void onBindViewHolder(ViewHolder holder, int position) {
         Bill bill = adapterData.get(position);
 
-        holder.name.setText(bill.toString());
+        holder.name.setText(bill.name);
+        DateTime dateTime = new DateTime(bill.dueDate);
+        int days = Days.daysBetween(new DateTime(), dateTime).getDays();
+        holder.dueInDays.setText(String.valueOf(days));
+        holder.dueDate.setText(dateTime.toString("MMMM d"));
     }
 
     @Override
@@ -67,10 +73,14 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
     public static class ViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder {
         public TextView name;
+        public TextView dueInDays;
+        public TextView dueDate;
 
         public ViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.name);
+            dueInDays = (TextView) v.findViewById(R.id.due_in_days);
+            dueDate = (TextView) v.findViewById(R.id.due_date);
         }
 
         @Override
