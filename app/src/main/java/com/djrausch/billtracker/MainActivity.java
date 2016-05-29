@@ -39,6 +39,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView, OnStartDragListener {
@@ -74,6 +75,18 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         }
 
         RealmResults<Bill> bills = presenter.loadBills();
+        bills.addChangeListener(new RealmChangeListener<RealmResults<Bill>>() {
+            @Override
+            public void onChange(RealmResults<Bill> element) {
+                if (adapter.getItemCount() == 0) {
+                    noBillsView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    noBillsView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -97,7 +110,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
     @Subscribe
     public void onBillSwiped(final BillSwipedEvent billSwipedEvent) {
-        Snackbar.make(coordinatorLayout, R.string.snackbar_bill_paid, Snackbar.LENGTH_LONG)
+        Snackbar.make(coordinatorLayout, getString(R.string.snackbar_bill_paid,billSwipedEvent.bill.name), Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -157,18 +170,5 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("Item Counnt", String.valueOf(adapter.getItemCount()));
-        if (adapter.getItemCount() == 0) {
-            noBillsView.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            noBillsView.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
     }
 }
