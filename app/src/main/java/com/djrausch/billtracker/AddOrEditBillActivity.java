@@ -87,6 +87,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
         name.setText(editBill.name);
         description.setText(editBill.description);
         selectedDueDate = new DateTime(editBill.dueDate);
+        setDueDateText(selectedDueDate);
         repeatingSpinner.setSelection(editBill.repeatingType);
     }
 
@@ -108,7 +109,10 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
         if (id == R.id.action_save) {
             if (editing) {
                 BillTrackerApplication.getRealm().beginTransaction();
-                BillTrackerApplication.getRealm().copyToRealmOrUpdate(editBill);
+                editBill.name = name.getText().toString();
+                editBill.description = description.getText().toString();
+                editBill.repeatingType = selectedRepeatingIndex;
+                editBill.dueDate = selectedDueDate.toDate();
                 BillTrackerApplication.getRealm().commitTransaction();
             } else {
                 Bill b = new Bill(name.getText().toString(), description.getText().toString(), true, selectedRepeatingIndex, selectedDueDate.toDate());
@@ -126,6 +130,10 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         selectedDueDate = new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0);
-        dueDateSelect.setText(selectedDueDate.toString("MMMM d"));
+        setDueDateText(selectedDueDate);
+    }
+
+    private void setDueDateText(DateTime dateText) {
+        dueDateSelect.setText(dateText.toString("MMMM d"));
     }
 }
