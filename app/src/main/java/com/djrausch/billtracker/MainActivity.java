@@ -2,17 +2,17 @@ package com.djrausch.billtracker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
@@ -21,10 +21,7 @@ import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
-import com.djrausch.billtracker.presenter.MainPresenter;
 import com.djrausch.billtracker.util.BillUtil;
-import com.djrausch.billtracker.view.MainView;
-import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,7 +31,7 @@ import butterknife.ButterKnife;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView, OnStartDragListener {
+public class MainActivity extends AppCompatActivity implements OnStartDragListener {
 
     @BindView(R.id.main_recyclerview)
     RecyclerView recyclerView;
@@ -71,7 +68,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
     private void configureRecyclerView() {
 
-        RealmResults<Bill> bills = presenter.loadBills();
+        RealmResults<Bill> bills = BillUtil.loadBills();
         bills.addChangeListener(new RealmChangeListener<RealmResults<Bill>>() {
             @Override
             public void onChange(RealmResults<Bill> element) {
@@ -118,12 +115,6 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 }).show();
     }
 
-    @NonNull
-    @Override
-    public MainPresenter createPresenter() {
-        return new MainPresenter();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -144,11 +135,6 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void showLoading(boolean loading) {
-
     }
 
     @Override

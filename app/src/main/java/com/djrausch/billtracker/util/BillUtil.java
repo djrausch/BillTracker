@@ -7,6 +7,8 @@ import com.djrausch.billtracker.models.Bill;
 
 import java.util.Date;
 
+import io.realm.RealmResults;
+
 public class BillUtil {
     public static void markBillPaid(Bill bill) {
         BillTrackerApplication.getRealm().beginTransaction();
@@ -20,5 +22,9 @@ public class BillUtil {
         BillTrackerApplication.getRealm().beginTransaction();
         bill.dueDate = oldDate;
         BillTrackerApplication.getRealm().commitTransaction();
+    }
+
+    public static RealmResults<Bill> loadBills(){
+        return BillTrackerApplication.getRealm().where(Bill.class).findAllSortedAsync("dueDate");
     }
 }
