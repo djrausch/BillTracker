@@ -12,9 +12,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
 import com.djrausch.billtracker.events.BillSwipedEvent;
@@ -46,6 +48,9 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
+
+    @BindView(R.id.no_bills)
+    LinearLayout noBillsView;
 
     MainRecyclerViewAdapter adapter;
     private ItemTouchHelper mItemTouchHelper;
@@ -152,5 +157,18 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("Item Counnt", String.valueOf(adapter.getItemCount()));
+        if (adapter.getItemCount() == 0) {
+            noBillsView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            noBillsView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 }
