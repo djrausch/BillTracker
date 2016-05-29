@@ -1,5 +1,6 @@
 package com.djrausch.billtracker;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +51,10 @@ public class ViewBillActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit) {
+            Intent i = new Intent(ViewBillActivity.this, AddOrEditBillActivity.class);
+            i.putExtra("edit", true);
+            i.putExtra("uuid", bill.uuid);
+            startActivity(i);
             finish();
             return true;
         }
