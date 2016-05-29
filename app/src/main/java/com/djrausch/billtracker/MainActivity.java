@@ -74,6 +74,11 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
             });
         }
 
+        configureRecyclerView();
+    }
+
+    private void configureRecyclerView() {
+
         RealmResults<Bill> bills = presenter.loadBills();
         bills.addChangeListener(new RealmChangeListener<RealmResults<Bill>>() {
             @Override
@@ -105,12 +110,11 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 startActivity(i);
             }
         });
-
     }
 
     @Subscribe
     public void onBillSwiped(final BillSwipedEvent billSwipedEvent) {
-        Snackbar.make(coordinatorLayout, getString(R.string.snackbar_bill_paid,billSwipedEvent.bill.name), Snackbar.LENGTH_LONG)
+        Snackbar.make(coordinatorLayout, getString(R.string.snackbar_bill_paid, billSwipedEvent.bill.name), Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
