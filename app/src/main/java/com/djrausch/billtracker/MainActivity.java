@@ -1,5 +1,8 @@
 package com.djrausch.billtracker;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,10 +24,14 @@ import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.receivers.AlarmReceiver;
+import com.djrausch.billtracker.util.AlarmUtil;
 import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
     MainRecyclerViewAdapter adapter;
     private ItemTouchHelper mItemTouchHelper;
+    private AlarmManager alarmManager;
+    private PendingIntent alarmIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         }
 
         configureRecyclerView();
+
+        AlarmUtil.setDailyAlarm(this);
     }
 
     private void configureRecyclerView() {
