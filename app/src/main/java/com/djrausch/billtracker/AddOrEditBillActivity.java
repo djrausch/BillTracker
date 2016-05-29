@@ -33,6 +33,9 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     private int selectedRepeatingIndex = 3;
     private DateTime selectedDueDate = new DateTime();
 
+    private boolean editing = false;
+    private Bill editBill;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +81,13 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     }
 
     private void loadBillForEditing(String uuid) {
-        Bill bill = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", uuid).findFirst();
+        editing = true;
+        editBill = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", uuid).findFirst();
 
-        name.setText(bill.name);
-        description.setText(bill.description);
-        selectedDueDate = new DateTime(bill.dueDate);
-        repeatingSpinner.setSelection(bill.repeatingType);
+        name.setText(editBill.name);
+        description.setText(editBill.description);
+        selectedDueDate = new DateTime(editBill.dueDate);
+        repeatingSpinner.setSelection(editBill.repeatingType);
     }
 
     @Override
@@ -102,10 +106,16 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
-            Bill b = new Bill(name.getText().toString(), description.getText().toString(), true, selectedRepeatingIndex, selectedDueDate.toDate());
-            BillTrackerApplication.getRealm().beginTransaction();
-            BillTrackerApplication.getRealm().copyToRealm(b);
-            BillTrackerApplication.getRealm().commitTransaction();
+            if (editing) {
+                BillTrackerApplication.getRealm().beginTransaction();
+                BillTrackerApplication.getRealm().copyToRealmOrUpdate(editBill);
+                BillTrackerApplication.getRealm().commitTransaction();
+            } else {
+                Bill b = new Bill(name.getText().toString(), description.getText().toString(), true, selectedRepeatingIndex, selectedDueDate.toDate());
+                BillTrackerApplication.getRealm().beginTransaction();
+                BillTrackerApplication.getRealm().copyToRealm(b);
+                BillTrackerApplication.getRealm().commitTransaction();
+            }
             finish();
             return true;
         }
