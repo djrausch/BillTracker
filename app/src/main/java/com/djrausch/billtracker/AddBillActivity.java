@@ -69,9 +69,9 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
                         AddBillActivity.this,
-                        now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH)
+                        selectedDueDate.getYear(),
+                        selectedDueDate.getMonthOfYear() - 1,
+                        selectedDueDate.getDayOfMonth()
                 );
                 dpd.show(getFragmentManager(), "Datepickerdialog");
             }
