@@ -37,4 +37,6 @@ dependencies {
 
     compile 'org.greenrobot:eventbus:3.0.0'
 
+    compile 'joda-time:joda-time:2.9.4'
+
 }

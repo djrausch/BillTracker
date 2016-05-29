@@ -14,6 +14,7 @@ import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -54,9 +55,11 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
 
         Bill bill = adapterData.get(position);
 
-        BillTrackerApplication.getRealm().beginTransaction();
+        BillUtil.markBillPaid(bill);
+
+        /*BillTrackerApplication.getRealm().beginTransaction();
         bill.dueDate = new Date();
-        BillTrackerApplication.getRealm().commitTransaction();
+        BillTrackerApplication.getRealm().commitTransaction();*/
 
         EventBus.getDefault().post(new BillSwipedEvent(oldDueDate, bill));
     }

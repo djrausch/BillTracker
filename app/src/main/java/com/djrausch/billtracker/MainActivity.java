@@ -23,6 +23,7 @@ import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.presenter.MainPresenter;
+import com.djrausch.billtracker.util.BillUtil;
 import com.djrausch.billtracker.view.MainView;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceActivity;
@@ -95,9 +96,10 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        BillTrackerApplication.getRealm().beginTransaction();
+                        /*BillTrackerApplication.getRealm().beginTransaction();
                         billSwipedEvent.bill.dueDate = billSwipedEvent.oldDate;
-                        BillTrackerApplication.getRealm().commitTransaction();
+                        BillTrackerApplication.getRealm().commitTransaction();*/
+                        BillUtil.undoMarkBillPaid(billSwipedEvent.oldDate, billSwipedEvent.bill);
                     }
                 }).show();
     }
