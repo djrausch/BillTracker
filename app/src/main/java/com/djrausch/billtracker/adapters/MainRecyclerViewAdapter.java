@@ -63,10 +63,6 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
 
         BillUtil.markBillPaid(bill);
 
-        /*BillTrackerApplication.getRealm().beginTransaction();
-        bill.dueDate = new Date();
-        BillTrackerApplication.getRealm().commitTransaction();*/
-
         EventBus.getDefault().post(new BillSwipedEvent(oldDueDate, bill));
     }
 
