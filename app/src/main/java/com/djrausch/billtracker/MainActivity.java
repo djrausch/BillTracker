@@ -6,13 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,14 +25,9 @@ import com.djrausch.billtracker.presenter.MainPresenter;
 import com.djrausch.billtracker.util.BillUtil;
 import com.djrausch.billtracker.view.MainView;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
-import com.hannesdorfmann.mosby.mvp.lce.MvpLceActivity;
-import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
-import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +61,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(MainActivity.this, AddBillActivity.class));
+                    startActivity(new Intent(MainActivity.this, AddOrEditBillActivity.class));
                 }
             });
         }

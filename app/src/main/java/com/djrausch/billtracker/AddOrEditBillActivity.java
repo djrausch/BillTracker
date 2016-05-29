@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddOrEditBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     @BindView(R.id.name)
     EditText name;
@@ -63,7 +63,7 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
             @Override
             public void onClick(View v) {
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
-                        AddBillActivity.this,
+                        AddOrEditBillActivity.this,
                         selectedDueDate.getYear(),
                         selectedDueDate.getMonthOfYear() - 1,
                         selectedDueDate.getDayOfMonth()
@@ -71,6 +71,19 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
                 dpd.show(getFragmentManager(), "Datepickerdialog");
             }
         });
+
+        if (getIntent().getExtras().containsKey("edit") && getIntent().getExtras().getBoolean("edit")) {
+            loadBillForEditing(getIntent().getExtras().getString("uuid"));
+        }
+    }
+
+    private void loadBillForEditing(String uuid) {
+        Bill bill = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", uuid).findFirst();
+
+        name.setText(bill.name);
+        description.setText(bill.description);
+        selectedDueDate = new DateTime(bill.dueDate);
+        repeatingSpinner.setSelection(bill.repeatingType);
     }
 
     @Override
