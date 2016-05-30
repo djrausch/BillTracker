@@ -29,6 +29,10 @@ public class NotificationUtil {
 
     public static void makeBillNotification(Context context, RealmResults<Bill> bills) {
         if (bills.size() > 1) {
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            for (Bill bill : bills) {
+                inboxStyle.addLine(bill.name + " " + context.getString(R.string.notification_due, new DateTime(bill.dueDate).toString("MMMM d")));
+            }
             //Create Summary Notification
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
@@ -36,6 +40,7 @@ public class NotificationUtil {
                             .setContentTitle("Upcoming Bills!")
                             .setCategory(Notification.CATEGORY_REMINDER)
                             .setColor(context.getResources().getColor(R.color.colorPrimary))
+                            .setStyle(inboxStyle)
                             .setGroup(GROUP_NAME)
                             .setGroupSummary(true);
 
