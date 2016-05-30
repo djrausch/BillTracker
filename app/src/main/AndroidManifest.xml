@@ -35,6 +35,13 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".receivers.NotificationReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.djrausch.billtracker.ACTION_MARK_BILL_PAID"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

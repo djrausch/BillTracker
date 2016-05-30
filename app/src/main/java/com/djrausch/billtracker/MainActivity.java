@@ -1,6 +1,7 @@
 package com.djrausch.billtracker;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,14 +26,12 @@ import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
-import com.djrausch.billtracker.receivers.AlarmReceiver;
+import com.djrausch.billtracker.util.NotificationUtil;
 import com.djrausch.billtracker.util.AlarmUtil;
 import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,9 +105,11 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Intent i = new Intent(MainActivity.this, ViewBillActivity.class);
+                /*Intent i = new Intent(MainActivity.this, ViewBillActivity.class);
                 i.putExtra("bill_uuid", adapter.getItem(position).uuid);
-                startActivity(i);
+                startActivity(i);*/
+
+                NotificationUtil.makeBillNotification(MainActivity.this, adapter.getItem(position));
             }
         });
     }
