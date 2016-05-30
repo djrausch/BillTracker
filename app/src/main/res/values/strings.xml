@@ -13,6 +13,8 @@
     <string name="name">Name</string>
     <string name="due_in">Due In</string>
     <string name="days">Days</string>
+    <string name="paid">Paid</string>
+    <string name="notification_due">"Due %s"</string>
     <string-array name="repeating_names">
         <item>Never</item>
         <item>Daily</item>
