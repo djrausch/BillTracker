@@ -1,5 +1,6 @@
 package com.djrausch.billtracker.util;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -41,6 +42,8 @@ public class NotificationUtil {
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_notification)
                         .setContentTitle(bill.name)
+                        .setCategory(Notification.CATEGORY_REMINDER)
+                        .setColor(context.getResources().getColor(R.color.colorPrimary))
                         .setContentText("Due "+new DateTime(bill.dueDate).toString("MMMM d"))
                         .addAction(R.drawable.ic_notification, "Paid", pendingIntent)
                         .setGroup(GROUP_NAME);
