@@ -44,8 +44,8 @@ public class NotificationUtil {
                         .setContentTitle(bill.name)
                         .setCategory(Notification.CATEGORY_REMINDER)
                         .setColor(context.getResources().getColor(R.color.colorPrimary))
-                        .setContentText("Due "+new DateTime(bill.dueDate).toString("MMMM d"))
-                        .addAction(R.drawable.ic_notification, "Paid", pendingIntent)
+                        .setContentText(context.getString(R.string.notification_due,new DateTime(bill.dueDate).toString("MMMM d")))
+                        .addAction(R.drawable.ic_notification, context.getString(R.string.paid), pendingIntent)
                         .setGroup(GROUP_NAME);
 
         NotificationManager mNotifyMgr =
