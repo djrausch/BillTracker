@@ -15,6 +15,8 @@ import org.joda.time.DateTime;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.realm.RealmResults;
+
 /**
  * Created by white on 5/29/2016.
  */
@@ -24,6 +26,51 @@ public class NotificationUtil {
     public static final String KEY_NOTIF_ID = "notificationId";
     public static final String GROUP_NAME = "bills";
 
+
+    public static void makeBillNotification(Context context, RealmResults<Bill> bills) {
+        if (bills.size() > 1) {
+            //Create Summary Notification
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.drawable.ic_notification)
+                            .setContentTitle("Upcoming Bills!")
+                            .setCategory(Notification.CATEGORY_REMINDER)
+                            .setColor(context.getResources().getColor(R.color.colorPrimary))
+                            .setGroup(GROUP_NAME)
+                            .setGroupSummary(true);
+
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotifyMgr.notify(new NotificationID(context).get(), mBuilder.build());
+        }
+        for (Bill bill : bills) {
+            Log.d("Bill Notif", bill.toString());
+            int notificationId = new NotificationID(context).get();
+            Log.d("Make - NotifId", String.valueOf(notificationId));
+
+            Intent i = new Intent(ACTION_MARK_BILL_PAID);
+            i.putExtra(KEY_BILL_UUID, bill.uuid);
+            i.putExtra(KEY_NOTIF_ID, notificationId);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, new NotificationID(context).get(), i, 0);
+
+            Log.d("PI", pendingIntent.toString());
+
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.drawable.ic_notification)
+                            .setContentTitle(bill.name)
+                            .setCategory(Notification.CATEGORY_REMINDER)
+                            .setColor(context.getResources().getColor(R.color.colorPrimary))
+                            .setContentText("Due " + new DateTime(bill.dueDate).toString("MMMM d"))
+                            .addAction(R.drawable.ic_notification, "Paid", pendingIntent)
+                            .setGroup(GROUP_NAME);
+
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotifyMgr.notify(notificationId, mBuilder.build());
+        }
+    }
 
     public static void makeBillNotification(Context context, Bill bill) {
         Log.d("Bill Notif", bill.toString());
@@ -44,12 +91,13 @@ public class NotificationUtil {
                         .setContentTitle(bill.name)
                         .setCategory(Notification.CATEGORY_REMINDER)
                         .setColor(context.getResources().getColor(R.color.colorPrimary))
-                        .setContentText("Due "+new DateTime(bill.dueDate).toString("MMMM d"))
+                        .setContentText("Due " + new DateTime(bill.dueDate).toString("MMMM d"))
                         .addAction(R.drawable.ic_notification, "Paid", pendingIntent)
                         .setGroup(GROUP_NAME);
 
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyMgr.notify(notificationId, mBuilder.build());
+
     }
 }
