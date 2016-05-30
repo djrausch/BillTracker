@@ -39,10 +39,10 @@ public class NotificationUtil {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_notification)
                         .setContentTitle(bill.name)
                         .setContentText("Due "+new DateTime(bill.dueDate).toString("MMMM d"))
-                        .addAction(R.mipmap.ic_launcher, "Paid", pendingIntent)
+                        .addAction(R.drawable.ic_notification, "Paid", pendingIntent)
                         .setGroup(GROUP_NAME);
 
         NotificationManager mNotifyMgr =
