@@ -13,8 +13,6 @@ import com.djrausch.billtracker.models.Bill;
 
 import org.joda.time.DateTime;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import io.realm.RealmResults;
 
 /**
