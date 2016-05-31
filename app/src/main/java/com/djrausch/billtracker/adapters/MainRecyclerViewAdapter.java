@@ -35,8 +35,7 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_bill, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override

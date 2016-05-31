@@ -12,7 +12,6 @@ public class Bill extends RealmObject {
     public String uuid;
     public String name;
     public String description;
-    public boolean isRepeating;
     public int repeatingType;
     public Date dueDate;
     public RealmList<BillNote> notes;
@@ -21,11 +20,10 @@ public class Bill extends RealmObject {
 
     }
 
-    public Bill(String name, String description, boolean isRepeating, int repeatingType, Date dueDate) {
+    public Bill(String name, String description, int repeatingType, Date dueDate) {
         this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
-        this.isRepeating = isRepeating;
         this.repeatingType = repeatingType;
         this.dueDate = dueDate;
     }
@@ -36,7 +34,6 @@ public class Bill extends RealmObject {
                 "uuid='" + uuid + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", isRepeating=" + isRepeating +
                 ", repeatingType=" + repeatingType +
                 ", dueDate=" + dueDate +
                 ", notes=" + notes +

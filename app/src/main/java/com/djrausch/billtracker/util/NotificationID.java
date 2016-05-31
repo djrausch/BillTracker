@@ -20,7 +20,7 @@ public class NotificationID {
         int atomicIntNew = atomicInt.incrementAndGet();
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("atomicId", atomicIntNew);
-        editor.commit();
+        editor.apply();
         return atomicIntNew;
     }
 }

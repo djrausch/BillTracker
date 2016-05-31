@@ -115,7 +115,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                 editBill.dueDate = selectedDueDate.toDate();
                 BillTrackerApplication.getRealm().commitTransaction();
             } else {
-                Bill b = new Bill(name.getText().toString(), description.getText().toString(), true, selectedRepeatingIndex, selectedDueDate.toDate());
+                Bill b = new Bill(name.getText().toString(), description.getText().toString(), selectedRepeatingIndex, selectedDueDate.toDate());
                 BillTrackerApplication.getRealm().beginTransaction();
                 BillTrackerApplication.getRealm().copyToRealm(b);
                 BillTrackerApplication.getRealm().commitTransaction();
