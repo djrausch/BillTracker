@@ -71,6 +71,13 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
             });
         }
 
+        noBillsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddOrEditBillActivity.class));
+            }
+        });
+
         configureRecyclerView();
         if (!BillTrackerApplication.isAlarmSet()) {
             AlarmUtil.setDailyAlarm(this);
@@ -110,13 +117,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
                 startActivity(i);
 
                 //NotificationUtil.makeBillNotification(MainActivity.this, adapter.getItem(position));
-            }
-        });
-
-        noBillsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddOrEditBillActivity.class));
             }
         });
     }
