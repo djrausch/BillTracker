@@ -1,6 +1,8 @@
 package com.djrausch.billtracker;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -94,7 +96,11 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add_bill_menu, menu);
+        if (editing) {
+            getMenuInflater().inflate(R.menu.edit_bill_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.add_bill_menu, menu);
+        }
         return true;
     }
 
@@ -122,9 +128,29 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
             }
             finish();
             return true;
+        } else if (id == R.id.delete_bill) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Confirm Deletion");
+            builder.setMessage("Are you sure you want to delete " + editBill.name + "?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteBill(editBill);
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+            builder.setNegativeButton("Cancel", null);
+            builder.show();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteBill(Bill bill) {
+        BillTrackerApplication.getRealm().beginTransaction();
+        bill.deleteFromRealm();
+        BillTrackerApplication.getRealm().commitTransaction();
     }
 
     @Override
