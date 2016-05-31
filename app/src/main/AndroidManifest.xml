@@ -29,21 +29,28 @@
             android:name=".ViewBillActivity"
             android:parentActivityName=".MainActivity" />
 
-        <receiver android:name=".receivers.BootReceiver"
+        <receiver
+            android:name=".receivers.BootReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receivers.NotificationReceiver"
+        <receiver
+            android:name=".receivers.NotificationReceiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="com.djrausch.billtracker.ACTION_MARK_BILL_PAID"/>
+                <action android:name="com.djrausch.billtracker.ACTION_MARK_BILL_PAID" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.AlarmReceiver"
-            android:enabled="true"/>
+        <receiver
+            android:name=".receivers.AlarmReceiver"
+            android:enabled="true" />
+
+        <meta-data
+            android:name="com.bugsnag.android.API_KEY"
+            android:value="b5dc2fd43bc012d2fb2035ca8fa41a43" />
     </application>
 
 </manifest>
