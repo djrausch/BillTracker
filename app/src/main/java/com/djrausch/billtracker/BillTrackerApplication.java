@@ -2,6 +2,7 @@ package com.djrausch.billtracker;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -27,5 +28,19 @@ public class BillTrackerApplication extends Application {
         }
 
         return realm;
+    }
+
+    public static void setAlarmSet() {
+        SharedPreferences preferences = context.getSharedPreferences(
+                "bill_tracker", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("alarm_set", true);
+        editor.apply();
+    }
+
+    public static boolean isAlarmSet() {
+        SharedPreferences preferences = context.getSharedPreferences(
+                "bill_tracker", Context.MODE_PRIVATE);
+        return preferences.getBoolean("alarm_set", false);
     }
 }

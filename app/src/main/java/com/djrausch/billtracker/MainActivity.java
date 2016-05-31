@@ -72,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         }
 
         configureRecyclerView();
-
-        AlarmUtil.setDailyAlarm(this);
+        if (!BillTrackerApplication.isAlarmSet()) {
+            AlarmUtil.setDailyAlarm(this);
+        }
     }
 
     private void configureRecyclerView() {

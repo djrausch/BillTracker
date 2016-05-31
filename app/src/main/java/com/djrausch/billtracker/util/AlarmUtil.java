@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.receivers.AlarmReceiver;
 
 import java.util.Calendar;
@@ -27,5 +28,7 @@ public class AlarmUtil {
         // constants--in this case, AlarmManager.INTERVAL_DAY.
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
+
+        BillTrackerApplication.setAlarmSet();
     }
 }
