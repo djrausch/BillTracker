@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Intent i = new Intent(MainActivity.this, ViewBillActivity.class);
+                Intent i = new Intent(MainActivity.this, AddOrEditBillActivity.class);
+                i.putExtra("edit", true);
                 i.putExtra("bill_uuid", adapter.getItem(position).uuid);
                 startActivity(i);
 

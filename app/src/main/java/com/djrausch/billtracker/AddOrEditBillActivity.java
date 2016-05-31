@@ -78,7 +78,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
         });
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("edit") && getIntent().getExtras().getBoolean("edit")) {
-            loadBillForEditing(getIntent().getExtras().getString("uuid"));
+            loadBillForEditing(getIntent().getExtras().getString("bill_uuid"));
         }
     }
 
