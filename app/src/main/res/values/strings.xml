@@ -19,6 +19,10 @@
     <string name="tap_to_add_bill">Tap to add bill</string>
     <string name="no_bills_tap_to_add">No Bills Added Yet!\nTap here or the plus to add a bill!</string>
     <string name="delete_bill">Delete Bill</string>
+    <string name="confirm_delete">Confirm Deletion</string>
+    <string name="deletion_message">"Are you sure you want to delete %s?"</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
     <string-array name="repeating_names">
         <item>Never</item>
         <item>Daily</item>

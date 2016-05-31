@@ -130,9 +130,9 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
             return true;
         } else if (id == R.id.delete_bill) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Confirm Deletion");
-            builder.setMessage("Are you sure you want to delete " + editBill.name + "?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.confirm_delete));
+            builder.setMessage(getString(R.string.deletion_message, editBill.name));
+            builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     deleteBill(editBill);
@@ -140,7 +140,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                     finish();
                 }
             });
-            builder.setNegativeButton("Cancel", null);
+            builder.setNegativeButton(getString(R.string.cancel), null);
             builder.show();
         }
 
