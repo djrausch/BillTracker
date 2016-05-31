@@ -23,7 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         //Find upcoming bills to show notificaiton for
         //Bill b = BillTrackerApplication.getRealm().where(Bill.class).findFirst();
-        RealmResults<Bill> bills = BillTrackerApplication.getRealm().where(Bill.class).findAll();
+        //RealmResults<Bill> bills = BillTrackerApplication.getRealm().where(Bill.class).findAll();
         //Find bills in the next week.
         RealmResults<Bill> bills1 = BillTrackerApplication.getRealm().where(Bill.class).between("dueDate", new Date(), new DateTime().plusWeeks(1).toDate()).findAll();
         NotificationUtil.makeBillNotification(context, bills1);

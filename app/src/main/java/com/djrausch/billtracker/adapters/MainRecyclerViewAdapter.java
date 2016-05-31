@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.R;
-import com.djrausch.billtracker.events.BillClickedEvent;
 import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder;

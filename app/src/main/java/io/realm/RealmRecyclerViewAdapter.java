@@ -4,12 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmChangeListener;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.RealmResults;
-
 public abstract class RealmRecyclerViewAdapter<T extends RealmObject, VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> { //put this in `io.realm`
 
