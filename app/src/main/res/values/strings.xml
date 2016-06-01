@@ -23,11 +23,12 @@
     <string name="deletion_message">"Are you sure you want to delete %s?"</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
-    <string-array name="repeating_names">
-        <item>Never</item>
-        <item>Daily</item>
-        <item>Weekly</item>
-        <item>Monthly</item>
-        <item>Yearly</item>
-    </string-array>
+    <string name="repeating_item_never">Never</string>
+    <string name="repeating_item_daily">Daily</string>
+    <string name="repeating_item_weekly">Weekly</string>
+    <string name="repeating_item_monthly">Monthly</string>
+    <string name="repeating_item_bi_yearly">Bi-Yearly</string>
+    <string name="repeating_item_yearly">Yearly</string>
+
+
 </resources>

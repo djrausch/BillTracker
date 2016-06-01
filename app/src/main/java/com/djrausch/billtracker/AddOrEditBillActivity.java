@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.djrausch.billtracker.adapters.RepeatingSpinnerAdapter;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.models.RepeatingItem;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
@@ -32,7 +34,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     @BindView(R.id.due_date_select)
     TextView dueDateSelect;
 
-    private int selectedRepeatingIndex = 3;
+    private RepeatingItem repeatingItem;
     private DateTime selectedDueDate = new DateTime();
 
     private boolean editing = false;
@@ -45,17 +47,18 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
 
         ButterKnife.bind(this);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.repeating_names, android.R.layout.simple_spinner_item);
+        repeatingItem = new RepeatingItem(getString(R.string.repeating_item_monthly), RepeatingItem.CODE_MONTHLY);
+
+        final RepeatingSpinnerAdapter adapter = new RepeatingSpinnerAdapter(this, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         repeatingSpinner.setAdapter(adapter);
         //Default to monthly
-        repeatingSpinner.setSelection(3);
+        repeatingSpinner.setSelection(repeatingItem.toIndex());
 
         repeatingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedRepeatingIndex = position;
+                repeatingItem = adapter.getItem(position);
             }
 
             @Override
@@ -90,7 +93,8 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
         description.setText(editBill.description);
         selectedDueDate = new DateTime(editBill.dueDate);
         setDueDateText(selectedDueDate);
-        repeatingSpinner.setSelection(editBill.repeatingType);
+        repeatingItem = new RepeatingItem("", editBill.repeatingType);
+        repeatingSpinner.setSelection(repeatingItem.toIndex());
     }
 
     @Override
@@ -117,11 +121,11 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                 BillTrackerApplication.getRealm().beginTransaction();
                 editBill.name = name.getText().toString();
                 editBill.description = description.getText().toString();
-                editBill.repeatingType = selectedRepeatingIndex;
+                editBill.repeatingType = repeatingItem.code;
                 editBill.dueDate = selectedDueDate.toDate();
                 BillTrackerApplication.getRealm().commitTransaction();
             } else {
-                Bill b = new Bill(name.getText().toString(), description.getText().toString(), selectedRepeatingIndex, selectedDueDate.toDate());
+                Bill b = new Bill(name.getText().toString(), description.getText().toString(), repeatingItem.code, selectedDueDate.toDate());
                 BillTrackerApplication.getRealm().beginTransaction();
                 BillTrackerApplication.getRealm().copyToRealm(b);
                 BillTrackerApplication.getRealm().commitTransaction();

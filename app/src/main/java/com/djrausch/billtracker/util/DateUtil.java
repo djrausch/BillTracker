@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.djrausch.billtracker.enums.Repeating;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.models.RepeatingItem;
 
 import org.joda.time.DateTime;
 
@@ -13,20 +14,18 @@ public class DateUtil {
     public static Date createNextDueDate(Bill bill) {
         DateTime dateTime = new DateTime(bill.dueDate);
         Log.d("createNext", String.format("DateTime %s", dateTime.toString()));
-        Repeating repeating = Repeating.values()[bill.repeatingType];
-        Log.d("Repeating", repeating.name());
-        switch (repeating) {
-            case None:
-                //Dont change the due date as it will never repeat
+        switch (bill.repeatingType) {
+            case RepeatingItem.CODE_NEVER:
                 return bill.dueDate;
-            case Daily:
-                //Add one day to due date.
+            case RepeatingItem.CODE_DAILY:
                 return dateTime.plusDays(1).toDate();
-            case Weekly:
+            case RepeatingItem.CODE_WEEKLY:
                 return dateTime.plusWeeks(1).toDate();
-            case Monthly:
+            case RepeatingItem.CODE_MONTHLY:
                 return dateTime.plusMonths(1).toDate();
-            case Yearly:
+            case RepeatingItem.CODE_BI_YEARLY:
+                return dateTime.plusMonths(6).toDate();
+            case RepeatingItem.CODE_YEARLY:
                 return dateTime.plusYears(1).toDate();
             default:
                 return bill.dueDate;
