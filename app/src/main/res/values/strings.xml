@@ -29,6 +29,8 @@
     <string name="repeating_item_monthly">Monthly</string>
     <string name="repeating_item_bi_yearly">Bi-Yearly</string>
     <string name="repeating_item_yearly">Yearly</string>
+    <string name="pay">Pay</string>
+    <string name="url_to_pay_bill">URL To Pay Bill</string>
 
 
 </resources>

@@ -33,6 +33,8 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     Spinner repeatingSpinner;
     @BindView(R.id.due_date_select)
     TextView dueDateSelect;
+    @BindView(R.id.pay_url)
+    EditText payUrl;
 
     private RepeatingItem repeatingItem;
     private DateTime selectedDueDate = new DateTime();
@@ -95,6 +97,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
         setDueDateText(selectedDueDate);
         repeatingItem = new RepeatingItem("", editBill.repeatingType);
         repeatingSpinner.setSelection(repeatingItem.toIndex());
+        payUrl.setText(editBill.payUrl);
     }
 
     @Override
@@ -123,9 +126,10 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                 editBill.description = description.getText().toString();
                 editBill.repeatingType = repeatingItem.code;
                 editBill.dueDate = selectedDueDate.toDate();
+                editBill.payUrl = payUrl.getText().toString();
                 BillTrackerApplication.getRealm().commitTransaction();
             } else {
-                Bill b = new Bill(name.getText().toString(), description.getText().toString(), repeatingItem.code, selectedDueDate.toDate());
+                Bill b = new Bill(name.getText().toString(), description.getText().toString(), repeatingItem.code, selectedDueDate.toDate(), payUrl.getText().toString());
                 BillTrackerApplication.getRealm().beginTransaction();
                 BillTrackerApplication.getRealm().copyToRealm(b);
                 BillTrackerApplication.getRealm().commitTransaction();

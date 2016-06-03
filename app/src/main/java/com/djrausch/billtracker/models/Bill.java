@@ -14,18 +14,20 @@ public class Bill extends RealmObject {
     public String description;
     public int repeatingType;
     public Date dueDate;
+    public String payUrl;
     public RealmList<BillNote> notes;
 
     public Bill() {
 
     }
 
-    public Bill(String name, String description, int repeatingType, Date dueDate) {
+    public Bill(String name, String description, int repeatingType, Date dueDate, String payUrl) {
         this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.repeatingType = repeatingType;
         this.dueDate = dueDate;
+        this.payUrl = payUrl;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class Bill extends RealmObject {
                 ", description='" + description + '\'' +
                 ", repeatingType=" + repeatingType +
                 ", dueDate=" + dueDate +
+                ", payUrl='" + payUrl + '\'' +
                 ", notes=" + notes +
                 '}';
     }
