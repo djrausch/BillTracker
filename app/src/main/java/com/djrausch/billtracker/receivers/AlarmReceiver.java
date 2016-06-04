@@ -6,6 +6,8 @@ import android.content.Intent;
 
 import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.util.AlarmUtil;
+import com.djrausch.billtracker.util.BillUtil;
 import com.djrausch.billtracker.util.NotificationUtil;
 
 import org.joda.time.DateTime;
@@ -25,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         //Bill b = BillTrackerApplication.getRealm().where(Bill.class).findFirst();
         //RealmResults<Bill> bills = BillTrackerApplication.getRealm().where(Bill.class).findAll();
         //Find bills in the next week.
-        RealmResults<Bill> bills1 = BillTrackerApplication.getRealm().where(Bill.class).between("dueDate", new Date(), new DateTime().plusWeeks(1).plusDays(2).toDate()).findAll();
+        RealmResults<Bill> bills1 = BillUtil.loadOneWeekBillsForNotification();
         NotificationUtil.makeBillNotification(context, bills1);
 
     }
