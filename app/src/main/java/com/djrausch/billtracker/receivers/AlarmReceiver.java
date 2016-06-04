@@ -25,7 +25,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         //Bill b = BillTrackerApplication.getRealm().where(Bill.class).findFirst();
         //RealmResults<Bill> bills = BillTrackerApplication.getRealm().where(Bill.class).findAll();
         //Find bills in the next week.
-        RealmResults<Bill> bills1 = BillTrackerApplication.getRealm().where(Bill.class).between("dueDate", new Date(), new DateTime().plusWeeks(1).toDate()).findAll();
+        RealmResults<Bill> bills1 = BillTrackerApplication.getRealm().where(Bill.class).between("dueDate", new Date(), new DateTime().plusWeeks(1).plusDays(2).toDate()).findAll();
         NotificationUtil.makeBillNotification(context, bills1);
 
     }
