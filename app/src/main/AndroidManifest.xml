@@ -24,9 +24,6 @@
         <activity
             android:name=".AddOrEditBillActivity"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".ViewBillActivity"
-            android:parentActivityName=".MainActivity" />
 
         <receiver
             android:name=".receivers.BootReceiver"
@@ -51,7 +48,6 @@
             android:name="com.bugsnag.android.API_KEY"
             android:value="b5dc2fd43bc012d2fb2035ca8fa41a43" />
 
-        <activity android:name=".AboutActivity" android:label="About"/>
     </application>
 
 </manifest>
