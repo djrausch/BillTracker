@@ -39,7 +39,7 @@ class BillTrackerApplication : Application() {
 
         fun setAlarmSet() {
             val preferences = context!!.getSharedPreferences(
-                    "bill_tracker", Context.MODE_PRIVATE)
+                    "bill_tracker_internal_settings", Context.MODE_PRIVATE)
             val editor = preferences.edit()
             editor.putBoolean("alarm_set", true)
             editor.apply()
@@ -48,7 +48,7 @@ class BillTrackerApplication : Application() {
         val isAlarmSet: Boolean
             get() {
                 val preferences = context!!.getSharedPreferences(
-                        "bill_tracker", Context.MODE_PRIVATE)
+                        "bill_tracker_internal_settings", Context.MODE_PRIVATE)
                 return preferences.getBoolean("alarm_set", false)
             }
     }

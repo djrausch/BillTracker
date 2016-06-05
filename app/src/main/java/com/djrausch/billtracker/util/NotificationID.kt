@@ -11,7 +11,7 @@ class NotificationID(context: Context) {
 
     init {
         preferences = context.getSharedPreferences(
-                "bill_tracker", Context.MODE_PRIVATE)
+                "bill_tracker_internal_settings", Context.MODE_PRIVATE)
         val a = preferences.getInt("atomicId", 0)
         atomicInt = AtomicInteger(a)
     }
