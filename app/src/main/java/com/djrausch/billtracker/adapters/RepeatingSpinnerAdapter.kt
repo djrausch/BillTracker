@@ -12,6 +12,10 @@ import com.djrausch.billtracker.models.RepeatingItem
 
 class RepeatingSpinnerAdapter(context: Context, resource: Int) : ArrayAdapter<RepeatingItem>(context, resource, RepeatingItem.getItems(context)) {
 
+    init {
+        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+    }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View
         val text: TextView

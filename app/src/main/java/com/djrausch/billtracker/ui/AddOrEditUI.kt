@@ -5,6 +5,8 @@ import android.support.v4.content.ContextCompat
 import android.widget.TextView
 import com.djrausch.billtracker.AddOrEditBillActivity
 import com.djrausch.billtracker.R
+import com.djrausch.billtracker.adapters.RepeatingSpinnerAdapter
+import com.djrausch.billtracker.models.RepeatingItem
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.textInputLayout
 
@@ -18,7 +20,7 @@ class AddOrEditUI : AnkoComponent<AddOrEditBillActivity> {
             verticalLayout {
                 padding = dip(16)
                 textInputLayout {
-                    editText {
+                    ui.owner.name = editText {
                         hintResource = R.string.name
                     }
                 }
@@ -32,7 +34,7 @@ class AddOrEditUI : AnkoComponent<AddOrEditBillActivity> {
                     topMargin = dip(8)
                 }
 
-                textView {
+                ui.owner.dueDateSelect = textView {
                     textResource = R.string.tap_to_select_due_date
                     textSize = 18f
                     isClickable = true
@@ -54,7 +56,14 @@ class AddOrEditUI : AnkoComponent<AddOrEditBillActivity> {
                 }
 
                 ui.owner.repeatingSpinner = spinner {
+                    adapter = RepeatingSpinnerAdapter(ctx, android.R.layout.simple_spinner_item)
 
+                    onItemSelectedListener {
+                        onItemSelected {
+                            adapterView, view, position, l ->
+                            ui.owner.repeatingItem = adapter.getItem(position) as RepeatingItem?
+                        }
+                    }
                 }.lparams(width = matchParent) {
                     topMargin = dip(2)
                 }
