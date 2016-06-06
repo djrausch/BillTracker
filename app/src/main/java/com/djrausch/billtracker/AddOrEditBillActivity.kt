@@ -18,7 +18,7 @@ import org.joda.time.DateTime
 
 class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
-    var repeatingItem: RepeatingItem? = null
+    lateinit var repeatingItem: RepeatingItem
     private var selectedDueDate = DateTime()
 
     private var editing = false
@@ -32,18 +32,34 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //Set UI
         AddOrEditUI().setContentView(this)
+        //Configure Spinner
+        configureRepeatingSpinner()
+        //Check if editing a previous bill
+        checkIfEditing()
+    }
 
-        repeatingItem = RepeatingItem(getString(R.string.repeating_item_monthly), RepeatingItem.CODE_MONTHLY)
-        repeatingSpinner?.setSelection(repeatingItem?.toIndex()!!)
-
-
+    /**
+     * Used to check intent for editing prop. If it is in edit mode, load the bill and set the ui.
+     */
+    private fun checkIfEditing() {
         if (intent.extras != null && intent.getBooleanExtra("edit", false)) {
             loadBillForEditing(intent.getStringExtra("bill_uuid"))
         }
     }
 
+    /**
+     * Set the repeating spinner to monthly by defualt
+     */
+    private fun configureRepeatingSpinner() {
+        repeatingItem = RepeatingItem(getString(R.string.repeating_item_monthly), RepeatingItem.CODE_MONTHLY)
+        repeatingSpinner?.setSelection(repeatingItem.toIndex())
+    }
+
+    /**
+     * Show the date picker
+     */
     fun showDatePicker() {
         val dpd = DatePickerDialog.newInstance(
                 this@AddOrEditBillActivity,
@@ -54,6 +70,10 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
     }
 
 
+    /**
+     * Load the bill for editing
+     * @param uuid The uuid of the bill to load
+     */
     private fun loadBillForEditing(uuid: String) {
         editing = true
         editBill = BillTrackerApplication.getRealm().where(Bill::class.java).contains("uuid", uuid).findFirst()
@@ -63,7 +83,7 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         selectedDueDate = DateTime(editBill!!.dueDate)
         setDueDateText(selectedDueDate)
         repeatingItem = RepeatingItem("", editBill!!.repeatingType)
-        repeatingSpinner?.setSelection(repeatingItem!!.toIndex())
+        repeatingSpinner?.setSelection(repeatingItem.toIndex())
         payUrl?.setText(editBill!!.payUrl)
     }
 
@@ -88,15 +108,15 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             val realm: Realm = BillTrackerApplication.getRealm()
             if (editing) {
                 realm.executeTransaction {
-                    editBill!!.name = name?.text.toString()
+                    editBill?.name = name?.text.toString()
                     //editBill!!.description = description.getText().toString()
-                    editBill!!.repeatingType = repeatingItem!!.code
-                    editBill!!.dueDate = selectedDueDate.toDate()
-                    editBill!!.payUrl = payUrl?.text.toString()
+                    editBill?.repeatingType = repeatingItem.code
+                    editBill?.dueDate = selectedDueDate.toDate()
+                    editBill?.payUrl = payUrl?.text.toString()
                 }
 
             } else {
-                val b = Bill(name?.text.toString(), "", repeatingItem!!.code, selectedDueDate.toDate(), payUrl?.text.toString())
+                val b = Bill(name?.text.toString(), "", repeatingItem.code, selectedDueDate.toDate(), payUrl?.text.toString())
                 realm.executeTransaction { realm.copyToRealm(b) }
             }
             finish()
@@ -117,16 +137,27 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Delete bill
+     * @param bill The bill to delete
+     */
     private fun deleteBill(bill: Bill?) {
         val realm: Realm = BillTrackerApplication.getRealm()
         realm.executeTransaction { bill?.deleteFromRealm() }
     }
 
+    /**
+     * Callback for date picker
+     */
     override fun onDateSet(view: DatePickerDialog, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         selectedDueDate = DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0)
         setDueDateText(selectedDueDate)
     }
 
+    /**
+     * Set the due date in the textview
+     * @param dateText The DateTime representing the user selected date.
+     */
     private fun setDueDateText(dateText: DateTime) {
         dueDateSelect?.text = dateText.toString("MMMM d")
     }
