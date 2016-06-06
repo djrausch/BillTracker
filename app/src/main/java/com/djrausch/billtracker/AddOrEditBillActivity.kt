@@ -12,6 +12,7 @@ import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.models.RepeatingItem
 import com.djrausch.billtracker.ui.AddOrEditUI
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import io.realm.Realm
 import org.jetbrains.anko.setContentView
 import org.joda.time.DateTime
 
@@ -84,19 +85,19 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
+            val realm: Realm = BillTrackerApplication.getRealm()
             if (editing) {
-                BillTrackerApplication.getRealm().beginTransaction()
-                editBill!!.name = name?.text.toString()
-                //editBill!!.description = description.getText().toString()
-                editBill!!.repeatingType = repeatingItem!!.code
-                editBill!!.dueDate = selectedDueDate.toDate()
-                editBill!!.payUrl = payUrl?.text.toString()
-                BillTrackerApplication.getRealm().commitTransaction()
+                realm.executeTransaction {
+                    editBill!!.name = name?.text.toString()
+                    //editBill!!.description = description.getText().toString()
+                    editBill!!.repeatingType = repeatingItem!!.code
+                    editBill!!.dueDate = selectedDueDate.toDate()
+                    editBill!!.payUrl = payUrl?.text.toString()
+                }
+
             } else {
                 val b = Bill(name?.text.toString(), "", repeatingItem!!.code, selectedDueDate.toDate(), payUrl?.text.toString())
-                BillTrackerApplication.getRealm().beginTransaction()
-                BillTrackerApplication.getRealm().copyToRealm(b)
-                BillTrackerApplication.getRealm().commitTransaction()
+                realm.executeTransaction { realm.copyToRealm(b) }
             }
             finish()
             return true
@@ -117,9 +118,8 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
     }
 
     private fun deleteBill(bill: Bill?) {
-        BillTrackerApplication.getRealm().beginTransaction()
-        bill?.deleteFromRealm()
-        BillTrackerApplication.getRealm().commitTransaction()
+        val realm: Realm = BillTrackerApplication.getRealm()
+        realm.executeTransaction { bill?.deleteFromRealm() }
     }
 
     override fun onDateSet(view: DatePickerDialog, year: Int, monthOfYear: Int, dayOfMonth: Int) {
