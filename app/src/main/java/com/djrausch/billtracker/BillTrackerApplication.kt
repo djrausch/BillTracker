@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 import com.djrausch.billtracker.models.Migration
+import com.djrausch.billtracker.util.AlarmUtil
 
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -14,6 +15,9 @@ class BillTrackerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+        if (!isAlarmSet) {
+            AlarmUtil.setDailyAlarm(applicationContext)
+        }
     }
 
     companion object {

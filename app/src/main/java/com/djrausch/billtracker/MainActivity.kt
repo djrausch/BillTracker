@@ -12,7 +12,6 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import butterknife.ButterKnife
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter
 import com.djrausch.billtracker.events.BillSwipedEvent
 import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport
@@ -34,19 +33,17 @@ class MainActivity : AppCompatActivity(), OnStartDragListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
         val toolbar = findViewById(R.id.toolbar) as Toolbar?
         setSupportActionBar(toolbar)
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton?
-        fab?.setOnClickListener { startActivity(Intent(this@MainActivity, AddOrEditBillActivity::class.java)) }
+        setClickListeners()
+        configureRecyclerView()
+    }
+
+    private fun setClickListeners() {
+        fab.setOnClickListener { startActivity(Intent(this@MainActivity, AddOrEditBillActivity::class.java)) }
 
         no_bills.setOnClickListener({ startActivity(Intent(this@MainActivity, AddOrEditBillActivity::class.java)) })
-
-        configureRecyclerView()
-        if (!BillTrackerApplication.isAlarmSet) {
-            AlarmUtil.setDailyAlarm(this)
-        }
     }
 
     private fun configureRecyclerView() {
