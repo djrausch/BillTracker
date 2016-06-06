@@ -7,11 +7,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import android.widget.EditText
+import android.widget.Spinner
 import com.djrausch.billtracker.adapters.RepeatingSpinnerAdapter
 import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.models.RepeatingItem
+import com.djrausch.billtracker.ui.AddOrEditUI
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.activity_add_bill.*
+import org.jetbrains.anko.setContentView
 import org.joda.time.DateTime
 
 class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
@@ -21,12 +25,40 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
     private var editing = false
     private var editBill: Bill? = null
+    var repeatingSpinner: Spinner? = null
+
+    var payUrl: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_bill)
+
+        AddOrEditUI().setContentView(this)
+
+
+        val adapter = RepeatingSpinnerAdapter(this, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        repeatingSpinner?.adapter = adapter
 
         repeatingItem = RepeatingItem(getString(R.string.repeating_item_monthly), RepeatingItem.CODE_MONTHLY)
+        repeatingSpinner?.setSelection(repeatingItem?.toIndex()!!)
+
+        repeatingSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                repeatingItem = adapter.getItem(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
+        if (intent.extras != null && intent.getBooleanExtra("edit", false)) {
+            loadBillForEditing(intent.getStringExtra("bill_uuid"))
+        }
+
+
+        /*setContentView(R.layout.activity_add_bill)
+
 
         val adapter = RepeatingSpinnerAdapter(this, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -55,9 +87,19 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
         if (intent.extras != null && intent.getBooleanExtra("edit", false)) {
             loadBillForEditing(intent.getStringExtra("bill_uuid"))
-        }
+        }*/
 
     }
+
+    fun showDatePicker() {
+        val dpd = DatePickerDialog.newInstance(
+                this@AddOrEditBillActivity,
+                selectedDueDate.year,
+                selectedDueDate.monthOfYear - 1,
+                selectedDueDate.dayOfMonth)
+        dpd.show(fragmentManager, "Datepickerdialog")
+    }
+
 
     private fun loadBillForEditing(uuid: String) {
         editing = true
@@ -137,3 +179,4 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         due_date_select.setText(dateText.toString("MMMM d"))
     }
 }
+
