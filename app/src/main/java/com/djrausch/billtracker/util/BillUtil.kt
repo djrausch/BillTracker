@@ -4,6 +4,7 @@ import android.util.Log
 
 import com.djrausch.billtracker.BillTrackerApplication
 import com.djrausch.billtracker.models.Bill
+import com.djrausch.billtracker.models.BillPaid
 
 import org.joda.time.DateTime
 
@@ -13,17 +14,20 @@ import io.realm.RealmResults
 
 object BillUtil {
     fun markBillPaid(bill: Bill) {
-        BillTrackerApplication.getRealm().beginTransaction()
-        bill.dueDate = DateUtil.createNextDueDate(bill)
-        BillTrackerApplication.getRealm().commitTransaction()
+        BillTrackerApplication.getRealm().executeTransaction {
+            bill.dueDate = DateUtil.createNextDueDate(bill)
+            bill.paidDates?.add(BillPaid(Date()))
+        }
 
         Log.d("BillPaid", bill.toString())
     }
 
     fun undoMarkBillPaid(oldDate: Date, bill: Bill) {
-        BillTrackerApplication.getRealm().beginTransaction()
-        bill.dueDate = oldDate
-        BillTrackerApplication.getRealm().commitTransaction()
+
+        BillTrackerApplication.getRealm().executeTransaction {
+            bill.dueDate = oldDate
+            bill.paidDates?.removeAt(bill.paidDates!!.size - 1)
+        }
     }
 
     fun loadBills(): RealmResults<Bill> {
