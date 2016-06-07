@@ -3,6 +3,7 @@ package com.djrausch.billtracker
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -94,6 +95,10 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         repeatingItem = RepeatingItem("", editBill!!.repeatingType)
         repeating_spinner?.setSelection(repeatingItem.toIndex())
         pay_url?.setText(editBill!!.payUrl)
+
+        Log.d("Bill Paid", editBill?.paidDates?.size.toString())
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
