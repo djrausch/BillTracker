@@ -31,7 +31,7 @@ class BillTrackerApplication : Application() {
 
         fun getRealm(): Realm {
             if (_realm == null) {
-                val realmConfig = RealmConfiguration.Builder(context!!).schemaVersion(1) // Must be bumped when the schema changes
+                val realmConfig = RealmConfiguration.Builder(context!!).schemaVersion(2) // Must be bumped when the schema changes
                         .migration(Migration()) // Migration to run instead of throwing an exception
                         .build()
 
