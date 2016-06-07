@@ -5,15 +5,11 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
 import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.models.RepeatingItem
-import com.djrausch.billtracker.ui.AddOrEditUI
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import io.realm.Realm
-import org.jetbrains.anko.setContentView
+import kotlinx.android.synthetic.main.activity_add_bill.*
 import org.joda.time.DateTime
 
 class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
@@ -24,16 +20,11 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
     private var editing = false
     private var editBill: Bill? = null
 
-    //UI
-    var name: EditText? = null
-    var dueDateSelect: TextView? = null
-    var repeatingSpinner: Spinner? = null
-    var payUrl: EditText? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Set UI
-        AddOrEditUI().setContentView(this)
+        setContentView(R.layout.activity_add_bill)
+        due_date_select.setOnClickListener { showDatePicker() }
         //Configure Spinner
         configureRepeatingSpinner()
         //Check if editing a previous bill
@@ -54,7 +45,7 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
      */
     private fun configureRepeatingSpinner() {
         repeatingItem = RepeatingItem(getString(R.string.repeating_item_monthly), RepeatingItem.CODE_MONTHLY)
-        repeatingSpinner?.setSelection(repeatingItem.toIndex())
+        repeating_spinner?.setSelection(repeatingItem.toIndex())
     }
 
     /**
@@ -83,8 +74,8 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         selectedDueDate = DateTime(editBill!!.dueDate)
         setDueDateText(selectedDueDate)
         repeatingItem = RepeatingItem("", editBill!!.repeatingType)
-        repeatingSpinner?.setSelection(repeatingItem.toIndex())
-        payUrl?.setText(editBill!!.payUrl)
+        repeating_spinner?.setSelection(repeatingItem.toIndex())
+        pay_url?.setText(editBill!!.payUrl)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -112,11 +103,11 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
                     //editBill!!.description = description.getText().toString()
                     editBill?.repeatingType = repeatingItem.code
                     editBill?.dueDate = selectedDueDate.toDate()
-                    editBill?.payUrl = payUrl?.text.toString()
+                    editBill?.payUrl = pay_url?.text.toString()
                 }
 
             } else {
-                val b = Bill(name?.text.toString(), "", repeatingItem.code, selectedDueDate.toDate(), payUrl?.text.toString())
+                val b = Bill(name?.text.toString(), "", repeatingItem.code, selectedDueDate.toDate(), pay_url?.text.toString())
                 realm.executeTransaction { realm.copyToRealm(b) }
             }
             finish()
@@ -159,7 +150,7 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
      * @param dateText The DateTime representing the user selected date.
      */
     private fun setDueDateText(dateText: DateTime) {
-        dueDateSelect?.text = dateText.toString("MMMM d")
+        due_date_select?.text = dateText.toString("MMMM d")
     }
 }
 
