@@ -72,12 +72,12 @@ class MainActivity : AppCompatActivity(), OnStartDragListener {
 
         //Item click listner
         ItemClickSupport.addTo(main_recyclerview).setOnItemClickListener { recyclerView, position, v ->
-            /*val i = Intent(this@MainActivity, AddOrEditBillActivity::class.java)
+            val i = Intent(this@MainActivity, AddOrEditBillActivity::class.java)
             i.putExtra("edit", true)
             i.putExtra("bill_uuid", adapter.getItem(position).uuid)
-            startActivity(i)*/
+            startActivity(i)
 
-            BillNotificationManager(this@MainActivity).makeBillNotification(adapter.getItem(position))
+            //BillNotificationManager(this@MainActivity).makeBillNotification(adapter.getItem(position))
 
         }
     }
