@@ -1,5 +1,7 @@
 package com.djrausch.billtracker.models;
 
+import java.util.Date;
+
 import io.realm.DynamicRealm;
 import io.realm.RealmMigration;
 import io.realm.RealmSchema;
@@ -13,6 +15,16 @@ public class Migration implements RealmMigration {
             //Add pay url to bill
             schema.get("Bill")
                     .addField("payUrl", String.class, null);
+            oldVersion++;
+        }
+
+        if (oldVersion == 1) {
+            schema.create("BillPaid")
+                    .addField("uuid", String.class)
+                    .addPrimaryKey("uuid")
+                    .addField("date", Date.class);
+            schema.get("Bill")
+                    .addRealmListField("paidDates", schema.get("BillPaid"));
             oldVersion++;
         }
     }

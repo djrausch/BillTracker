@@ -16,6 +16,7 @@ open class Bill : RealmObject {
     open var dueDate: Date? = null
     open var payUrl: String? = null
     open var notes: RealmList<BillNote>? = null
+    open var paidDates: RealmList<BillPaid>? = null
 
     constructor() {
 
@@ -31,6 +32,6 @@ open class Bill : RealmObject {
     }
 
     override fun toString(): String {
-        return "Bill{uuid='$uuid', name='$name', description='$description', repeatingType=$repeatingType, dueDate=$dueDate, payUrl='$payUrl', notes=$notes}"
+        return "Bill{uuid='$uuid', name='$name', description='$description', repeatingType=$repeatingType, dueDate=$dueDate, payUrl='$payUrl', notes=$notes, paidDate=$paidDates}"
     }
 }
