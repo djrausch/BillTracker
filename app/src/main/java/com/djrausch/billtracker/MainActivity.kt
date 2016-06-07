@@ -2,7 +2,6 @@ package com.djrausch.billtracker
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -17,7 +16,6 @@ import com.djrausch.billtracker.events.BillSwipedEvent
 import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback
-import com.djrausch.billtracker.util.AlarmUtil
 import com.djrausch.billtracker.util.BillUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -59,15 +57,19 @@ class MainActivity : AppCompatActivity(), OnStartDragListener {
             }
         }
 
+        //Set layout manager of recycler view
         main_recyclerview.layoutManager = LinearLayoutManager(this)
 
+        //Create and set adapter
         adapter = MainRecyclerViewAdapter(this, bills)
         main_recyclerview.adapter = adapter
 
+        //Add swipe support
         val callback = SimpleItemTouchHelperCallback(adapter)
         mItemTouchHelper = ItemTouchHelper(callback)
         mItemTouchHelper.attachToRecyclerView(main_recyclerview)
 
+        //Item click listner
         ItemClickSupport.addTo(main_recyclerview).setOnItemClickListener { recyclerView, position, v ->
             val i = Intent(this@MainActivity, AddOrEditBillActivity::class.java)
             i.putExtra("edit", true)
