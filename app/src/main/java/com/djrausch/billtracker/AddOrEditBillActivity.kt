@@ -55,8 +55,8 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         repeating_spinner.adapter = adapter
         repeating_spinner?.setSelection(repeatingItem.toIndex())
 
-        repeating_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+        repeating_spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 repeatingItem = adapter.getItem(position)
             }
 
