@@ -10,7 +10,7 @@ import android.util.Log
 import com.djrausch.billtracker.BillTrackerApplication
 import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.util.BillUtil
-import com.djrausch.billtracker.util.NotificationUtil
+import com.djrausch.billtracker.util.BillNotificationManager
 
 /**
  * Created by white on 5/29/2016.
@@ -22,17 +22,17 @@ class NotificationReceiver : BroadcastReceiver() {
         Log.d("onReceive", intent.action)
 
         if (intent.extras != null) {
-            val billUuid = intent.getStringExtra(NotificationUtil.KEY_BILL_UUID)
-            val notificationId = intent.getIntExtra(NotificationUtil.KEY_NOTIF_ID, 0)
+            val billUuid = intent.getStringExtra(BillNotificationManager.KEY_BILL_UUID)
+            val notificationId = intent.getIntExtra(BillNotificationManager.KEY_NOTIF_ID, 0)
 
             val action = intent.action
 
             val b = BillTrackerApplication.getRealm().where(Bill::class.java).contains("uuid", billUuid).findFirst()
 
-            if (action == NotificationUtil.ACTION_MARK_BILL_PAID) {
+            if (action == BillNotificationManager.ACTION_MARK_BILL_PAID) {
                 Log.d("Receive - NotifId", notificationId.toString())
 
-                Log.d(TAG, "onReceive: " + intent.getStringExtra(NotificationUtil.KEY_BILL_UUID)!!)
+                Log.d(TAG, "onReceive: " + intent.getStringExtra(BillNotificationManager.KEY_BILL_UUID)!!)
 
                 BillUtil.markBillPaid(b)
 

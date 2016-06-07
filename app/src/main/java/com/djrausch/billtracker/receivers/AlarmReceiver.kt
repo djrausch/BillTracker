@@ -8,7 +8,7 @@ import com.djrausch.billtracker.BillTrackerApplication
 import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.util.AlarmUtil
 import com.djrausch.billtracker.util.BillUtil
-import com.djrausch.billtracker.util.NotificationUtil
+import com.djrausch.billtracker.util.BillNotificationManager
 
 import org.joda.time.DateTime
 
@@ -27,7 +27,8 @@ class AlarmReceiver : BroadcastReceiver() {
         //RealmResults<Bill> bills = BillTrackerApplication.getRealm().where(Bill.class).findAll();
         //Find bills in the next week.
         val bills1 = BillUtil.loadOneWeekBillsForNotification()
-        NotificationUtil.makeBillNotification(context, bills1)
+        BillNotificationManager(context).makeBillNotification(bills1)
+
 
     }
 }

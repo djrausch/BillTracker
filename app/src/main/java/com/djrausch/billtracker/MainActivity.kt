@@ -17,6 +17,7 @@ import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback
 import com.djrausch.billtracker.util.BillUtil
+import com.djrausch.billtracker.util.BillNotificationManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.greenrobot.eventbus.EventBus
@@ -71,12 +72,13 @@ class MainActivity : AppCompatActivity(), OnStartDragListener {
 
         //Item click listner
         ItemClickSupport.addTo(main_recyclerview).setOnItemClickListener { recyclerView, position, v ->
-            val i = Intent(this@MainActivity, AddOrEditBillActivity::class.java)
+            /*val i = Intent(this@MainActivity, AddOrEditBillActivity::class.java)
             i.putExtra("edit", true)
             i.putExtra("bill_uuid", adapter.getItem(position).uuid)
-            startActivity(i)
+            startActivity(i)*/
 
-            //NotificationUtil.makeBillNotification(MainActivity.this, adapter.getItem(position));
+            BillNotificationManager(this@MainActivity).makeBillNotification(adapter.getItem(position))
+
         }
     }
 
@@ -104,6 +106,7 @@ class MainActivity : AppCompatActivity(), OnStartDragListener {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
             return true
         }
 

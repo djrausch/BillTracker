@@ -7,10 +7,10 @@
     <application
         android:name=".BillTrackerApplication"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_schema"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:fullBackupContent="@xml/backup_schema"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -31,7 +31,7 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
         <receiver
@@ -49,6 +49,9 @@
             android:name="com.bugsnag.android.API_KEY"
             android:value="b5dc2fd43bc012d2fb2035ca8fa41a43" />
 
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>
