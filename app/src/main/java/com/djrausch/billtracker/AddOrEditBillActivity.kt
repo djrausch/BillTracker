@@ -5,6 +5,9 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import com.djrausch.billtracker.adapters.RepeatingSpinnerAdapter
 import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.models.RepeatingItem
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -45,7 +48,22 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
      */
     private fun configureRepeatingSpinner() {
         repeatingItem = RepeatingItem(getString(R.string.repeating_item_monthly), RepeatingItem.CODE_MONTHLY)
+
+        val adapter: RepeatingSpinnerAdapter = RepeatingSpinnerAdapter(this@AddOrEditBillActivity, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        repeating_spinner.adapter = adapter
         repeating_spinner?.setSelection(repeatingItem.toIndex())
+
+        repeating_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                repeatingItem = adapter.getItem(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
     }
 
     /**
