@@ -14,7 +14,7 @@ public class Migration implements RealmMigration {
         if (oldVersion == 0) {
             //Add pay url to bill
             schema.get("Bill")
-                    .addField("payUrl", String.class, null);
+                    .addField("payUrl", String.class);
             oldVersion++;
         }
 
