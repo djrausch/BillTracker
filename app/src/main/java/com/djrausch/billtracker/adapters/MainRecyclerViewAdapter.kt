@@ -31,8 +31,19 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
         holder.name.text = bill.name
         val dateTime = DateTime(bill.dueDate)
         val days = Days.daysBetween(DateTime(), dateTime).days
-        holder.dueInDays.text = days.toString()
+
         holder.dueDate.text = dateTime.toString("MMMM d")
+
+        if (days < 0) {
+            val daysAgo = Math.abs(days)
+            holder.dueTopLabel.text = context.getString(R.string.due)
+            holder.dueInDays.text = daysAgo.toString()
+            holder.dueBottomLabel.text = if (daysAgo > 1) context.getString(R.string.days_ago) else context.getString(R.string.day_ago)
+        } else {
+            holder.dueTopLabel.text = context.getString(R.string.due_in)
+            holder.dueInDays.text = days.toString()
+            holder.dueBottomLabel.text = context.getString(R.string.days)
+        }
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
@@ -53,10 +64,16 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
         var name: TextView
         var dueInDays: TextView
         var dueDate: TextView
+        var dueTopLabel: TextView
+        var dueBottomLabel: TextView
 
         init {
             name = v.findViewById(R.id.name) as TextView
+
+            dueTopLabel = v.findViewById(R.id.due_top_label) as TextView
             dueInDays = v.findViewById(R.id.due_in_days) as TextView
+            dueBottomLabel = v.findViewById(R.id.due_bottom_label) as TextView
+
             dueDate = v.findViewById(R.id.due_date) as TextView
         }
 
