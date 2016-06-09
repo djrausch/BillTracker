@@ -1,6 +1,8 @@
 package com.djrausch.billtracker.adapters
 
 import android.content.Context
+import android.graphics.Color
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +37,7 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
         holder.dueDate.text = dateTime.toString("MMMM d")
 
         if (days < 0) {
+            holder.card.setCardBackgroundColor(Color.parseColor("#E57373"))
             val daysAgo = Math.abs(days)
             holder.dueTopLabel.text = context.getString(R.string.due)
             holder.dueInDays.text = daysAgo.toString()
@@ -61,6 +64,7 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v), ItemTouchHelperViewHolder {
+        var card: CardView
         var name: TextView
         var dueInDays: TextView
         var dueDate: TextView
@@ -68,6 +72,8 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
         var dueBottomLabel: TextView
 
         init {
+            card = v.findViewById(R.id.card_view) as CardView
+
             name = v.findViewById(R.id.name) as TextView
 
             dueTopLabel = v.findViewById(R.id.due_top_label) as TextView
