@@ -6,24 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import com.djrausch.billtracker.R
 import com.djrausch.billtracker.events.BillSwipedEvent
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder
 import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.util.BillUtil
-
+import io.realm.OrderedRealmCollection
+import io.realm.RealmRecyclerViewAdapter
 import org.greenrobot.eventbus.EventBus
 import org.joda.time.DateTime
 import org.joda.time.Days
 
-import java.util.Date
-
-import io.realm.OrderedRealmCollection
-import io.realm.RealmRecyclerViewAdapter
-
-class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bill>) : RealmRecyclerViewAdapter<Bill, MainRecyclerViewAdapter.ViewHolder>(context, bills), ItemTouchHelperAdapter {
+class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bill>) : RealmRecyclerViewAdapter<Bill, MainRecyclerViewAdapter.ViewHolder>(context, bills, true), ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.row_bill, parent, false)
@@ -31,7 +26,7 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val bill = adapterData[position]
+        val bill = data[position]
 
         holder.name.text = bill.name
         val dateTime = DateTime(bill.dueDate)
@@ -45,9 +40,9 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
     }
 
     override fun onItemDismiss(position: Int) {
-        val oldDueDate = adapterData[position].dueDate
+        val oldDueDate = data[position].dueDate
 
-        val bill = adapterData[position]
+        val bill = data[position]
 
         BillUtil.markBillPaid(bill)
 
