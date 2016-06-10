@@ -43,7 +43,7 @@ class MainRecyclerViewAdapter(context: Context, bills: OrderedRealmCollection<Bi
             holder.dueInDays.text = daysAgo.toString()
             holder.dueBottomLabel.text = if (daysAgo > 1) context.getString(R.string.days_ago) else context.getString(R.string.day_ago)
         } else {
-            holder.card.setCardBackgroundColor(Color.parseColor("#f9f9f9"))
+            holder.card.setCardBackgroundColor(Color.WHITE)
             holder.dueTopLabel.text = context.getString(R.string.due_in)
             holder.dueInDays.text = days.toString()
             holder.dueBottomLabel.text = context.getString(R.string.days)
