@@ -1,6 +1,7 @@
 package com.djrausch.billtracker.models
 
 import android.content.Context
+import android.support.annotation.StringRes
 
 import com.djrausch.billtracker.R
 
@@ -43,6 +44,18 @@ class RepeatingItem(var title: String, var code: Int) {
             repeatingItems.add(RepeatingItem(context.getString(R.string.repeating_item_yearly), RepeatingItem.CODE_YEARLY))
 
             return repeatingItems
+        }
+
+        fun convertCodeToStringRes(code: Int): Int {
+            when (code) {
+                CODE_NEVER -> return R.string.repeating_item_never
+                CODE_DAILY -> return R.string.repeating_item_daily
+                CODE_WEEKLY -> return R.string.repeating_item_weekly
+                CODE_MONTHLY -> return R.string.repeating_item_monthly
+                CODE_BI_YEARLY -> return R.string.repeating_item_bi_yearly
+                CODE_YEARLY -> return R.string.repeating_item_yearly
+                else -> return R.string.repeating_item_monthly
+            }
         }
     }
 }
