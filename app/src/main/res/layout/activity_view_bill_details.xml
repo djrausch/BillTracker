@@ -9,4 +9,33 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.djrausch.billtracker.ViewBillDetails">
 
+    <TextView
+        android:id="@+id/bill_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Bill"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/bill_repeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bill_name"
+        android:layout_centerHorizontal="true"
+        android:text="@string/repeats_view_bill"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/bill_next_due"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bill_repeat"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/next_due_date_view_bill" />
+
 </RelativeLayout>

@@ -95,6 +95,8 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="notifications">Notifications</string>
     <string name="led">LED</string>
+    <string name="repeats_view_bill">Repeats %s</string>
+    <string name="next_due_date_view_bill">Next Due Date: %s</string>
 
 
 </resources>

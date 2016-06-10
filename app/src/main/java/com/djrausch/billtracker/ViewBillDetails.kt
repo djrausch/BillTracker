@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.djrausch.billtracker.models.Bill
+import com.djrausch.billtracker.models.RepeatingItem
+import kotlinx.android.synthetic.main.activity_view_bill_details.*
+import org.joda.time.DateTime
 
 class ViewBillDetails : AppCompatActivity() {
 
@@ -25,8 +28,15 @@ class ViewBillDetails : AppCompatActivity() {
 
         bill = BillTrackerApplication.getRealm().where(Bill::class.java).contains("uuid", billUuid).findFirstAsync()
         bill.addChangeListener<Bill> {
-            title = bill.name
+            setUI()
         }
+    }
+
+    private fun setUI() {
+        title = bill.name
+        bill_name.text = bill.name
+        bill_repeat.text = getString(R.string.repeats_view_bill, RepeatingItem.convertCodeToString(this, bill.repeatingType))
+        bill_next_due.text = getString(R.string.next_due_date_view_bill, DateTime(bill.dueDate).toString("MMMM d"))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -46,15 +46,15 @@ class RepeatingItem(var title: String, var code: Int) {
             return repeatingItems
         }
 
-        fun convertCodeToStringRes(code: Int): Int {
+        fun convertCodeToString(context: Context, code: Int): String {
             when (code) {
-                CODE_NEVER -> return R.string.repeating_item_never
-                CODE_DAILY -> return R.string.repeating_item_daily
-                CODE_WEEKLY -> return R.string.repeating_item_weekly
-                CODE_MONTHLY -> return R.string.repeating_item_monthly
-                CODE_BI_YEARLY -> return R.string.repeating_item_bi_yearly
-                CODE_YEARLY -> return R.string.repeating_item_yearly
-                else -> return R.string.repeating_item_monthly
+                CODE_NEVER -> return context.getString(R.string.repeating_item_never)
+                CODE_DAILY -> return context.getString(R.string.repeating_item_daily)
+                CODE_WEEKLY -> return context.getString(R.string.repeating_item_weekly)
+                CODE_MONTHLY -> return context.getString(R.string.repeating_item_monthly)
+                CODE_BI_YEARLY -> return context.getString(R.string.repeating_item_bi_yearly)
+                CODE_YEARLY -> return context.getString(R.string.repeating_item_yearly)
+                else -> return context.getString(R.string.repeating_item_monthly)
             }
         }
     }
