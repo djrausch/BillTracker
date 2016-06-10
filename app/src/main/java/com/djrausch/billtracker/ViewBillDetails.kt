@@ -43,7 +43,6 @@ class ViewBillDetails : AppCompatActivity() {
     }
 
     private fun setUI() {
-        title = bill.name
         bill_name.text = bill.name
         bill_repeat.text = getString(R.string.repeats_view_bill, RepeatingItem.convertCodeToString(this, bill.repeatingType))
         bill_next_due.text = getString(R.string.next_due_date_view_bill, DateTime(bill.dueDate).toString("MMMM d"))
