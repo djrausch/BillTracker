@@ -3,8 +3,10 @@ package com.djrausch.billtracker
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.djrausch.billtracker.adapters.PaidDateRecyclerViewAdapter
 import com.djrausch.billtracker.models.Bill
 import com.djrausch.billtracker.models.RepeatingItem
 import kotlinx.android.synthetic.main.activity_view_bill_details.*
@@ -14,6 +16,9 @@ class ViewBillDetails : AppCompatActivity() {
 
     lateinit var bill: Bill
     lateinit var billUuid: String
+
+    lateinit var adapter: PaidDateRecyclerViewAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +33,11 @@ class ViewBillDetails : AppCompatActivity() {
 
         bill = BillTrackerApplication.getRealm().where(Bill::class.java).contains("uuid", billUuid).findFirstAsync()
         bill.addChangeListener<Bill> {
+            if (bill.paidDates != null) {
+                adapter = PaidDateRecyclerViewAdapter(this, bill.paidDates!!)
+                bill_paid_recycler_view.layoutManager = LinearLayoutManager(this)
+                bill_paid_recycler_view.adapter = adapter
+            }
             setUI()
         }
     }
