@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.djrausch.billtracker.adapters.PaidDateRecyclerViewAdapter
@@ -65,10 +66,21 @@ class ViewBillDetails : AppCompatActivity() {
             val i: Intent = Intent(this@ViewBillDetails, AddOrEditBillActivity::class.java)
             i.putExtra("edit", true)
             i.putExtra("bill_uuid", billUuid)
-            startActivity(Intent(i))
+            startActivityForResult(Intent(i), 1)
             return true
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+        Log.d("Hello??", "requestCode: $requestCode code: $resultCode")
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (intent.getBooleanExtra("delete", false)) {
+                    this@ViewBillDetails.finish()
+                }
+            }
+        }
     }
 }

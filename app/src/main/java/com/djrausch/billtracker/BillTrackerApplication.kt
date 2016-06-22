@@ -3,6 +3,7 @@ package com.djrausch.billtracker
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.bugsnag.android.Bugsnag
 
 import com.djrausch.billtracker.models.Migration
 import com.djrausch.billtracker.util.AlarmUtil
@@ -15,9 +16,11 @@ class BillTrackerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+        Bugsnag.init(context)
         if (!isAlarmSet) {
             AlarmUtil.setDailyAlarm(applicationContext)
         }
+
     }
 
     companion object {

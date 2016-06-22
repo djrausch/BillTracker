@@ -1,5 +1,6 @@
 package com.djrausch.billtracker
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -133,6 +134,10 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
                 val b = Bill(name?.text.toString(), "", repeatingItem.code, selectedDueDate.toDate(), pay_url?.text.toString())
                 realm.executeTransaction { realm.copyToRealm(b) }
             }
+
+            var intent = Intent()
+            intent.putExtra("delete", false)
+            setResult(RESULT_OK, intent);
             finish()
             return true
         } else if (id == R.id.delete_bill) {
@@ -142,6 +147,10 @@ class AddOrEditBillActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
                 deleteBill(editBill)
                 dialog.dismiss()
+
+                var intent = Intent()
+                intent.putExtra("delete", true)
+                setResult(RESULT_OK, intent);
                 finish()
             }
             builder.setNegativeButton(getString(R.string.cancel), null)
