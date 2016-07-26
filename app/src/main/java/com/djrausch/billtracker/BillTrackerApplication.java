@@ -13,7 +13,7 @@ import io.realm.RealmConfiguration;
 /**
  * Created by white on 7/25/2016.
  */
-public class JBillTrackerApplication extends Application {
+public class BillTrackerApplication extends Application {
     private static Context context;
     private boolean alarmSet;
 
@@ -40,7 +40,7 @@ public class JBillTrackerApplication extends Application {
         return realm;
     }
 
-    public void setAlarm() {
+    public static void setAlarmSet() {
         SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
@@ -49,7 +49,7 @@ public class JBillTrackerApplication extends Application {
     }
 
 
-    public boolean isAlarmSet() {
+    public static boolean isAlarmSet() {
         SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
         return preferences.getBoolean("alarm_set", false);
     }

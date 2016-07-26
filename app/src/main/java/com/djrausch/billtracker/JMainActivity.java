@@ -15,14 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.djrausch.billtracker.adapters.JMainRecyclerViewAdapter;
+import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
 import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.util.BillUtil;
-import com.djrausch.billtracker.util.JBillUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,7 +42,7 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
 
-    private JMainRecyclerViewAdapter adapter;
+    private MainRecyclerViewAdapter adapter;
     private ItemTouchHelper itemTouchHelper;
 
     @Override
@@ -76,9 +75,8 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
     }
 
     private void configureRecyclerView() {
-        RealmResults<Bill> bills = JBillUtil.loadBills();
+        RealmResults<Bill> bills = BillUtil.loadBills();
 
-        assert bills != null;
         bills.addChangeListener(new RealmChangeListener<RealmResults<Bill>>() {
             @Override
             public void onChange(RealmResults<Bill> element) {
@@ -95,7 +93,7 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        adapter = new JMainRecyclerViewAdapter(this, bills);
+        adapter = new MainRecyclerViewAdapter(this, bills);
         recyclerView.setAdapter(adapter);
 
         SimpleItemTouchHelperCallback callback = new SimpleItemTouchHelperCallback(adapter);
@@ -118,7 +116,7 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
         Snackbar.make(coordinatorLayout, getString(R.string.snackbar_bill_paid, billSwipedEvent.bill.getName()), Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JBillUtil.undoMarkBillPaid(billSwipedEvent.oldDate, billSwipedEvent.bill);
+                BillUtil.undoMarkBillPaid(billSwipedEvent.oldDate, billSwipedEvent.bill);
             }
         }).show();
     }

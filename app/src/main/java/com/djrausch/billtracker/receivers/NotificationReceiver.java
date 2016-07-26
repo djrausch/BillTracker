@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.djrausch.billtracker.JBillTrackerApplication;
+import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.util.BillNotificationManager;
 import com.djrausch.billtracker.util.BillUtil;
@@ -24,7 +24,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
             String action = intent.getAction();
 
-            Bill bill = JBillTrackerApplication.getRealm().where(Bill.class).contains("uuid", billUuid).findFirst();
+            Bill bill = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", billUuid).findFirst();
 
             if (action.equals(BillNotificationManager.ACTION_MARK_BILL_PAID)) {
                 BillUtil.markBillPaid(bill);

@@ -1,6 +1,6 @@
 package com.djrausch.billtracker.util;
 
-import com.djrausch.billtracker.JBillTrackerApplication;
+import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.models.BillPaid;
 
@@ -16,7 +16,7 @@ import io.realm.RealmResults;
  */
 public class BillUtil {
     public static void markBillPaid(final Bill bill) {
-        JBillTrackerApplication.getRealm().executeTransaction(new Realm.Transaction() {
+        BillTrackerApplication.getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 bill.setDueDate(DateUtil.createNextDueDate(bill));
@@ -26,7 +26,7 @@ public class BillUtil {
     }
 
     public static void undoMarkBillPaid(final Date date, final Bill bill) {
-        JBillTrackerApplication.getRealm().executeTransaction(new Realm.Transaction() {
+        BillTrackerApplication.getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 if (bill.getPaidDates() != null) {
@@ -38,10 +38,10 @@ public class BillUtil {
     }
 
     public static RealmResults<Bill> loadBills() {
-        return JBillTrackerApplication.getRealm().where(Bill.class).findAllSortedAsync("dueDate");
+        return BillTrackerApplication.getRealm().where(Bill.class).findAllSortedAsync("dueDate");
     }
 
     public static RealmResults<Bill> loadOneWeekBillsForNotification() {
-        return JBillTrackerApplication.getRealm().where(Bill.class).between("dueDate", new DateTime().minusWeeks(1).toDate(), new DateTime().plusWeeks(1).plusDays(1).toDate()).findAll();
+        return BillTrackerApplication.getRealm().where(Bill.class).between("dueDate", new DateTime().minusWeeks(1).toDate(), new DateTime().plusWeeks(1).plusDays(1).toDate()).findAll();
     }
 }
