@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "681020831309",
+    "firebase_url": "https://bill-tracker-ae96f.firebaseio.com",
+    "project_id": "bill-tracker-ae96f",
+    "storage_bucket": "bill-tracker-ae96f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681020831309:android:0c3f478ac55253a2",
+        "android_client_info": {
+          "package_name": "com.djrausch.billtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681020831309-gnl3eg70gnhven35f9mpieto30r9ttad.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.djrausch.billtracker",
+            "certificate_hash": "3565412ECD489FB533D1E735DAA8921FE4C21D8E"
+          }
+        },
+        {
+          "client_id": "681020831309-eea6ipngr6cetcrsfgijc7u0kqspjb6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0wqPtlv_d4umfC1DmDxlsSEfakMqOjKM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681020831309-eea6ipngr6cetcrsfgijc7u0kqspjb6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
