@@ -14,7 +14,7 @@ import com.djrausch.billtracker.models.RepeatingItem;
  */
 public class RepeatingSpinnerAdapter extends ArrayAdapter<RepeatingItem> {
     public RepeatingSpinnerAdapter(Context context, int resource) {
-        super(context, resource);
+        super(context, resource, RepeatingItem.getItems(context));
         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
