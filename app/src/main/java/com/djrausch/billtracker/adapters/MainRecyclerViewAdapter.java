@@ -14,7 +14,7 @@ import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder;
 import com.djrausch.billtracker.models.Bill;
-import com.djrausch.billtracker.util.JBillUtil;
+import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.joda.time.DateTime;
@@ -30,9 +30,9 @@ import io.realm.RealmRecyclerViewAdapter;
 /**
  * Created by white on 7/25/2016.
  */
-public class JMainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, JMainRecyclerViewAdapter.ViewHolder> implements ItemTouchHelperAdapter {
+public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, MainRecyclerViewAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
-    public JMainRecyclerViewAdapter(Context context, OrderedRealmCollection<Bill> data) {
+    public MainRecyclerViewAdapter(Context context, OrderedRealmCollection<Bill> data) {
         super(context, data, true);
     }
 
@@ -76,7 +76,7 @@ public class JMainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, JMa
         Date oldDate = getData().get(position).getDueDate();
 
         Bill bill = getData().get(position);
-        JBillUtil.markBillPaid(bill);
+        BillUtil.markBillPaid(bill);
 
         EventBus.getDefault().post(new BillSwipedEvent(oldDate, bill));
     }
