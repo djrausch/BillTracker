@@ -18,7 +18,7 @@ public class Bill extends RealmObject {
     public int repeatingType = 0;
     public Date dueDate;
     public String payUrl;
-    public RealmList<BillNote> billNotes;
+    public RealmList<BillNote> notes;
     public RealmList<BillPaid> paidDates;
 
     public Bill() {
@@ -43,7 +43,7 @@ public class Bill extends RealmObject {
                 ", repeatingType=" + repeatingType +
                 ", dueDate=" + dueDate +
                 ", payUrl='" + payUrl + '\'' +
-                ", billNotes=" + billNotes +
+                ", notes=" + notes +
                 ", paidDates=" + paidDates +
                 '}';
     }
@@ -97,11 +97,11 @@ public class Bill extends RealmObject {
     }
 
     public RealmList<BillNote> getBillNotes() {
-        return billNotes;
+        return notes;
     }
 
     public void setBillNotes(RealmList<BillNote> billNotes) {
-        this.billNotes = billNotes;
+        this.notes = billNotes;
     }
 
     public RealmList<BillPaid> getPaidDates() {

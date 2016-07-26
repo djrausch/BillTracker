@@ -53,6 +53,12 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        noBillsLayout = (LinearLayout) findViewById(R.id.no_bills);
+        recyclerView = (RecyclerView) findViewById(R.id.main_recyclerview);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
+
+
         setClickListeners();
         configureRecyclerView();
     }
