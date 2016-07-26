@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-public class JMainActivity extends AppCompatActivity implements OnStartDragListener {
+public class MainActivity extends AppCompatActivity implements OnStartDragListener {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -64,7 +64,7 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
     }
 
     private void setClickListeners() {
-        final Intent i = new Intent(JMainActivity.this, AddOrEditBillActivity.class);
+        final Intent i = new Intent(MainActivity.this, AddOrEditBillActivity.class);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +109,7 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Intent i = new Intent(JMainActivity.this, ViewBillDetails.class);
+                Intent i = new Intent(MainActivity.this, ViewBillDetails.class);
                 i.putExtra("edit", true);
                 i.putExtra("bill_uuid", adapter.getItem(position).getUuid());
                 startActivity(i);
@@ -137,7 +137,7 @@ public class JMainActivity extends AppCompatActivity implements OnStartDragListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            startActivity(new Intent(JMainActivity.this, SettingsActivity.class));
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
         }
 
