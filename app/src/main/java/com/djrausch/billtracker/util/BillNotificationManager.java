@@ -60,11 +60,11 @@ public class BillNotificationManager {
 
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(new NotificationID(context).get(), builder.build());
-
-                for (Bill bill : bills) {
-
-                }
             }
+            for (Bill bill : bills) {
+                makeBillNotification(bill);
+            }
+
         }
     }
 
