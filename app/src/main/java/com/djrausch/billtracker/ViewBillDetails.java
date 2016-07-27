@@ -15,6 +15,8 @@ import com.djrausch.billtracker.models.RepeatingItem;
 
 import org.joda.time.DateTime;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
 
@@ -24,20 +26,20 @@ public class ViewBillDetails extends AppCompatActivity {
     private String billUuid;
 
     PaidDateRecyclerViewAdapter adapter;
-    private RecyclerView recyclerView;
-    private TextView billName;
-    private TextView repeat;
-    private TextView due;
+    @BindView(R.id.bill_paid_recycler_view)
+    public RecyclerView recyclerView;
+    @BindView(R.id.bill_name)
+    public TextView billName;
+    @BindView(R.id.bill_repeat)
+    public TextView repeat;
+    @BindView(R.id.bill_next_due)
+    public TextView due;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jview_bill_details);
-
-        recyclerView = (RecyclerView) findViewById(R.id.bill_paid_recycler_view);
-        billName = (TextView) findViewById(R.id.bill_name);
-        repeat = (TextView) findViewById(R.id.bill_repeat);
-        due = (TextView) findViewById(R.id.bill_next_due);
+        ButterKnife.bind(this);
 
         loadBillAndListen();
     }

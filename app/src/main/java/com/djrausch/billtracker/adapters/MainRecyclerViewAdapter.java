@@ -103,13 +103,6 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            card = (CardView) itemView.findViewById(R.id.card_view);
-            name = (TextView) itemView.findViewById(R.id.name);
-            dueInDays = (TextView) itemView.findViewById(R.id.due_in_days);
-            dueDate = (TextView) itemView.findViewById(R.id.due_date);
-            dueTopLabel = (TextView) itemView.findViewById(R.id.due_top_label);
-            dueBottomLabel = (TextView) itemView.findViewById(R.id.due_bottom_label);
         }
 
         @Override

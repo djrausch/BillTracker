@@ -20,17 +20,24 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 
 public class AddOrEditBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    @BindView(R.id.repeating_spinner)
+    public Spinner repeatingSpinner;
+    @BindView(R.id.name)
+    public EditText name;
+    @BindView(R.id.pay_url)
+    public EditText payUrl;
+    @BindView(R.id.due_date_select)
+    public TextView dueDateSelect;
+
+
     private RepeatingItem repeatingItem;
     private DateTime selectedDueDate = new DateTime();
-    private TextView dueDateSelect;
-    private Spinner repeatingSpinner;
-
-    private EditText name;
-    private EditText payUrl;
 
 
     private boolean editing = false;
@@ -40,12 +47,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_or_edit_bill);
-
-        dueDateSelect = (TextView) findViewById(R.id.due_date_select);
-        repeatingSpinner = (Spinner) findViewById(R.id.repeating_spinner);
-
-        name = (EditText) findViewById(R.id.name);
-        payUrl = (EditText) findViewById(R.id.pay_url);
+        ButterKnife.bind(this);
 
         dueDateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
