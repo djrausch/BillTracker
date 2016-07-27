@@ -98,6 +98,7 @@
     <string name="repeats_view_bill">Repeats %s</string>
     <string name="next_due_date_view_bill">Next Due Date: %s</string>
     <string name="title_activity_jmain">JMainActivity</string>
+    <string name="title_activity_jsettings">Settings</string>
 
 
 </resources>
