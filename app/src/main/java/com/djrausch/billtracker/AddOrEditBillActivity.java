@@ -25,7 +25,7 @@ import io.realm.Realm;
 public class AddOrEditBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private RepeatingItem repeatingItem;
-    private DateTime selectedDueDate;
+    private DateTime selectedDueDate = new DateTime();
     private TextView dueDateSelect;
     private Spinner repeatingSpinner;
 
