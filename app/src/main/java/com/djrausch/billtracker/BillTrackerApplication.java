@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.bugsnag.android.Bugsnag;
 import com.djrausch.billtracker.models.Migration;
+import com.djrausch.billtracker.util.AlarmUtil;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -25,7 +26,7 @@ public class BillTrackerApplication extends Application {
         context = getApplicationContext();
         Bugsnag.init(context);
         if (!isAlarmSet()) {
-            //TODO
+            AlarmUtil.setDailyAlarm(context);
         }
     }
 
