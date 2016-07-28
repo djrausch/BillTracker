@@ -100,5 +100,8 @@
     <string name="title_activity_jmain">JMainActivity</string>
     <string name="title_activity_jsettings">Settings</string>
 
+    <string name="banner_ad_unit_id">ca-app-pub-1464692828868203/2490671795</string>
+
+
 
 </resources>

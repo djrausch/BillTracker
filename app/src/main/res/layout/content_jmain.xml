@@ -17,10 +17,10 @@
 
     <LinearLayout
         android:id="@+id/no_bills"
-        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:clickable="true"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
@@ -33,9 +33,9 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:contentDescription="@string/tap_to_add_bill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/tap_to_add_bill"
             android:src="@mipmap/ic_launcher" />
     </LinearLayout>
 </RelativeLayout>

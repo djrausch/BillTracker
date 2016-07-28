@@ -3,6 +3,7 @@ package com.djrausch.billtracker;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.bugsnag.android.Bugsnag;
 import com.djrausch.billtracker.models.Migration;
@@ -52,6 +53,7 @@ public class BillTrackerApplication extends Application {
 
     public static boolean isAlarmSet() {
         SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
+        Log.d("Alarm","Pref set");
         return preferences.getBoolean("alarm_set", false);
     }
 }

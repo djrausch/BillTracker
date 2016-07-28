@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.receivers.AlarmReceiver;
@@ -17,6 +18,7 @@ public class AlarmUtil {
     public static final int ALARM_PI_ID = 100;
 
     public static void setDailyAlarm(Context context) {
+        Log.d("Alarm", "Setting Daily Alarm");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmReceiver.class);

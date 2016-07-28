@@ -21,7 +21,11 @@ import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.util.AlarmUtil;
 import com.djrausch.billtracker.util.BillUtil;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-1464692828868203~1013938599");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("D68C46B15DA6D66612423C3526F0F16C").build();
+        mAdView.loadAd(adRequest);
+
 
         setClickListeners();
         configureRecyclerView();
