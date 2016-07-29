@@ -62,7 +62,7 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
             holder.card.setCardBackgroundColor(Color.WHITE);
             holder.dueTopLabel.setText(context.getString(R.string.due_in));
             holder.dueInDays.setText(String.valueOf(days));
-            holder.dueBottomLabel.setText(context.getString(R.string.days));
+            holder.dueBottomLabel.setText(days == 1 ? context.getString(R.string.day) : context.getString(R.string.days));
         }
     }
 
