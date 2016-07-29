@@ -19,10 +19,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 public class ViewBillDetails extends AppCompatActivity {
 
-    private Bill bill;
     private String billUuid;
 
     PaidDateRecyclerViewAdapter adapter;
@@ -47,10 +49,18 @@ public class ViewBillDetails extends AppCompatActivity {
     private void loadBillAndListen() {
         billUuid = getIntent().getStringExtra("bill_uuid");
 
-        bill = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", billUuid).findFirstAsync();
-        bill.addChangeListener(new RealmChangeListener<RealmModel>() {
+        Observable<Bill> billObservable = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", billUuid).findFirst().asObservable();
+
+        billObservable.filter(new Func1<Bill, Boolean>() {
             @Override
-            public void onChange(RealmModel element) {
+            public Boolean call(Bill bill) {
+                return bill.isLoaded();
+            }
+        }).subscribe(new Action1<Bill>() {
+            @Override
+            public void call(Bill bill) {
+                setUI(bill);
+
                 if (bill.paidDates != null) {
                     if (adapter == null) {
                         adapter = new PaidDateRecyclerViewAdapter(ViewBillDetails.this, bill.getPaidDates());
@@ -58,12 +68,11 @@ public class ViewBillDetails extends AppCompatActivity {
                         recyclerView.setAdapter(adapter);
                     }
                 }
-                setUI();
             }
         });
     }
 
-    private void setUI() {
+    private void setUI(Bill bill) {
         billName.setText(bill.getName());
         repeat.setText(getString(R.string.repeats_view_bill, RepeatingItem.convertCodeToString(this, bill.repeatingType)));
         due.setText(getString(R.string.next_due_date_view_bill, new DateTime(bill.dueDate).toString("MMMM d")));
