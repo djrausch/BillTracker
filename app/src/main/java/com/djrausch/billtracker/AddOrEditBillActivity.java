@@ -23,6 +23,9 @@ import org.joda.time.DateTime;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 public class AddOrEditBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -97,15 +100,30 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
 
     private void loadBillForEditing(String billUuid) {
         editing = true;
-        editBill = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", billUuid).findFirst();
 
+        Observable<Bill> billObservable = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", billUuid).findFirst().asObservable();
+
+        billObservable.filter(new Func1<Bill, Boolean>() {
+            @Override
+            public Boolean call(Bill bill) {
+                return bill.isLoaded();
+            }
+        }).subscribe(new Action1<Bill>() {
+            @Override
+            public void call(Bill bill) {
+                editBill = bill;
+                setBillInUI();
+            }
+        });
+    }
+
+    private void setBillInUI() {
         name.setText(editBill.getName());
         selectedDueDate = new DateTime(editBill.getDueDate());
         setDueDateText(selectedDueDate);
         repeatingItem = new RepeatingItem("", editBill.getRepeatingType());
         repeatingSpinner.setSelection(repeatingItem.toIndex());
         payUrl.setText(editBill.getPayUrl());
-
     }
 
     @Override
