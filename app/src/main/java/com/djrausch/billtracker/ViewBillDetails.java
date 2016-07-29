@@ -38,7 +38,7 @@ public class ViewBillDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jview_bill_details);
+        setContentView(R.layout.activity_view_bill_details);
         ButterKnife.bind(this);
 
         loadBillAndListen();
