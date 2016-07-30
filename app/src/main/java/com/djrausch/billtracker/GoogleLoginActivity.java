@@ -69,6 +69,8 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
             GoogleSignInAccount acct = result.getSignInAccount();
             String idToken = acct.getIdToken();
 
+            presenter.googleLogin(idToken);
+
         } else {
 
         }
