@@ -7,7 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.djrausch.billtracker.network.controllers.UserApi;
+import com.djrausch.billtracker.presenters.GoogleLoginPresenter;
+import com.djrausch.billtracker.views.GoogleLoginView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -17,9 +21,14 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
+
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
-public class GoogleLoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLoginPresenter> implements GoogleApiClient.OnConnectionFailedListener, GoogleLoginView {
 
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9000;
@@ -120,5 +129,21 @@ public class GoogleLoginActivity extends AppCompatActivity implements GoogleApiC
                 }
             });
         }
+    }
+
+    @NonNull
+    @Override
+    public GoogleLoginPresenter createPresenter() {
+        return new GoogleLoginPresenter();
+    }
+
+    @Override
+    public void showLoginSuccess(String token) {
+        Toast.makeText(this, "Success: " + token, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLoginError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 }
