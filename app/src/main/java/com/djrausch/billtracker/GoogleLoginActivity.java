@@ -34,6 +34,11 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_login);
 
+        if (!BillTrackerApplication.getUserToken().equals("")) {
+            //TODO Implement signout
+            Toast.makeText(this, "Sign out coming soon!", Toast.LENGTH_LONG).show();
+        }
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken("747191068465-7q6nm6i2nblk9uceeph7l3dm0s1cmppc.apps.googleusercontent.com")
@@ -66,7 +71,7 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
             presenter.googleLogin(idToken);
 
         } else {
-
+            //TODO Error
         }
     }
 
@@ -77,7 +82,7 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        //TODO Error
     }
 
     @Override
@@ -135,7 +140,8 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
 
     @Override
     public void showLoginSuccess(String token) {
-        Toast.makeText(this, "Success: " + token, Toast.LENGTH_LONG).show();
+        BillTrackerApplication.setUserToken(token);
+        finish();
     }
 
     @Override

@@ -14,7 +14,6 @@ import retrofit2.Response;
 public class GoogleLoginPresenter extends MvpBasePresenter<GoogleLoginView> {
 
     public void googleLogin(String googleToken) {
-        Log.d("googleLogin", "Token: " + googleToken);
         UserApi.googleLogin(googleToken).enqueue(new Callback<UserLoginResponse>() {
             @Override
             public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {

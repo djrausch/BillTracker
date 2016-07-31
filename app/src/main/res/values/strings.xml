@@ -102,6 +102,8 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-1464692828868203/2490671795</string>
     <string name="day">Day</string>
+    <string name="internal_preference_file_key">internal_settings</string>
+    <string name="user_token">user_token</string>
 
 
 </resources>

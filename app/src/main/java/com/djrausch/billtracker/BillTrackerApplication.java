@@ -53,7 +53,21 @@ public class BillTrackerApplication extends Application {
 
     public static boolean isAlarmSet() {
         SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
-        Log.d("Alarm","Pref set");
+        Log.d("Alarm", "Pref set");
         return preferences.getBoolean("alarm_set", false);
+    }
+
+    public static void setUserToken(String token) {
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.internal_preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context.getString(R.string.user_token), token);
+        editor.commit();
+    }
+
+    public static String getUserToken() {
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.internal_preference_file_key), Context.MODE_PRIVATE);
+        return sharedPref.getString(context.getString(R.string.user_token), "");
     }
 }
