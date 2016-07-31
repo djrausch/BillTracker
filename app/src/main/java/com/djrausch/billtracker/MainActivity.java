@@ -133,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
+        } else if(id == R.id.action_login){
+            startActivity(new Intent(MainActivity.this, GoogleLoginActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

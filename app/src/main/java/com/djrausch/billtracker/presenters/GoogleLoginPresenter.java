@@ -1,5 +1,7 @@
 package com.djrausch.billtracker.presenters;
 
+import android.util.Log;
+
 import com.djrausch.billtracker.models.UserLoginResponse;
 import com.djrausch.billtracker.network.controllers.UserApi;
 import com.djrausch.billtracker.views.GoogleLoginView;
@@ -12,6 +14,7 @@ import retrofit2.Response;
 public class GoogleLoginPresenter extends MvpBasePresenter<GoogleLoginView> {
 
     public void googleLogin(String googleToken) {
+        Log.d("googleLogin", "Token: " + googleToken);
         UserApi.googleLogin(googleToken).enqueue(new Callback<UserLoginResponse>() {
             @Override
             public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
@@ -23,7 +26,7 @@ public class GoogleLoginPresenter extends MvpBasePresenter<GoogleLoginView> {
                 } else {
                     //Error
                     if (getView() != null) {
-                        getView().showLoginError("error!");
+                        getView().showLoginError("Error: " + response.code());
                     }
                 }
             }
@@ -31,6 +34,11 @@ public class GoogleLoginPresenter extends MvpBasePresenter<GoogleLoginView> {
             @Override
             public void onFailure(Call<UserLoginResponse> call, Throwable t) {
                 //Error
+                if (getView() != null) {
+                    getView().showLoginError("error!");
+                }
+
+                t.printStackTrace();
             }
         });
     }

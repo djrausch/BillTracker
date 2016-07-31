@@ -1,35 +1,33 @@
 {
   "project_info": {
-    "project_number": "681020831309",
-    "firebase_url": "https://bill-tracker-ae96f.firebaseio.com",
-    "project_id": "bill-tracker-ae96f",
-    "storage_bucket": "bill-tracker-ae96f.appspot.com"
+    "project_number": "747191068465",
+    "project_id": "firebase-billtracker"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:681020831309:android:0c3f478ac55253a2",
+        "mobilesdk_app_id": "1:747191068465:android:0c3f478ac55253a2",
         "android_client_info": {
           "package_name": "com.djrausch.billtracker"
         }
       },
       "oauth_client": [
         {
-          "client_id": "681020831309-gnl3eg70gnhven35f9mpieto30r9ttad.apps.googleusercontent.com",
+          "client_id": "747191068465-bq3g4j8uqlbder6aa5opp4bi9fl5ivnj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.djrausch.billtracker",
-            "certificate_hash": "3565412ECD489FB533D1E735DAA8921FE4C21D8E"
+            "certificate_hash": "D164742117DA1905EF78A67C067D2F712BF8B197"
           }
         },
         {
-          "client_id": "681020831309-eea6ipngr6cetcrsfgijc7u0kqspjb6b.apps.googleusercontent.com",
+          "client_id": "747191068465-7q6nm6i2nblk9uceeph7l3dm0s1cmppc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA0wqPtlv_d4umfC1DmDxlsSEfakMqOjKM"
+          "current_key": "AIzaSyDrSPJb57gn-w1Xl-WMhO0R1CvjWRl0How"
         }
       ],
       "services": {
@@ -37,16 +35,11 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "681020831309-eea6ipngr6cetcrsfgijc7u0kqspjb6b.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }

@@ -9,6 +9,6 @@ import retrofit2.http.POST;
 
 public interface UserApiService {
     @FormUrlEncoded
-    @POST("/api/googlelogin")
+    @POST("api/googlelogin")
     Call<UserLoginResponse> googleLoginUser(@Field("google_token") String googleToken);
 }

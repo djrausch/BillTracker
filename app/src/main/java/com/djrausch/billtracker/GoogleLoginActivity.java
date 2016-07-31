@@ -2,14 +2,12 @@ package com.djrausch.billtracker;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.djrausch.billtracker.network.controllers.UserApi;
 import com.djrausch.billtracker.presenters.GoogleLoginPresenter;
 import com.djrausch.billtracker.views.GoogleLoginView;
 import com.google.android.gms.auth.api.Auth;
@@ -22,10 +20,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
-
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLoginPresenter> implements GoogleApiClient.OnConnectionFailedListener, GoogleLoginView {
@@ -41,8 +35,8 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
         setContentView(R.layout.activity_google_login);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("681020831309-eea6ipngr6cetcrsfgijc7u0kqspjb6b.apps.googleusercontent.com")
                 .requestEmail()
+                .requestIdToken("747191068465-7q6nm6i2nblk9uceeph7l3dm0s1cmppc.apps.googleusercontent.com")
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
