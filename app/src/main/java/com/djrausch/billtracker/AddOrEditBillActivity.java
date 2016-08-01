@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -154,6 +155,11 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                         editBill.setPayUrl(payUrl.getText().toString());
                     }
                 });
+                if (!BillTrackerApplication.getUserToken().equals("")) {
+                    Log.d("Date", editBill.toString());
+
+                    BillApi.updateBill(editBill);
+                }
             } else {
                 final Bill b = new Bill(name.getText().toString(), "", repeatingItem.code, selectedDueDate.toDate(), payUrl.getText().toString());
                 realm.executeTransaction(new Realm.Transaction() {
