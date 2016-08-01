@@ -38,10 +38,10 @@ public class BillUtil {
     }
 
     public static RealmResults<Bill> loadBills() {
-        return BillTrackerApplication.getRealm().where(Bill.class).findAllSortedAsync("dueDate");
+        return BillTrackerApplication.getRealm().where(Bill.class).equalTo("deleted", false).findAllSortedAsync("dueDate");
     }
 
     public static RealmResults<Bill> loadOneWeekBillsForNotification() {
-        return BillTrackerApplication.getRealm().where(Bill.class).between("dueDate", new DateTime().minusWeeks(1).toDate(), new DateTime().plusWeeks(1).plusDays(1).toDate()).findAll();
+        return BillTrackerApplication.getRealm().where(Bill.class).equalTo("deleted", false).between("dueDate", new DateTime().minusWeeks(1).toDate(), new DateTime().plusWeeks(1).plusDays(1).toDate()).findAll();
     }
 }

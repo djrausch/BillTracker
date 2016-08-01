@@ -25,6 +25,7 @@ public class Bill extends RealmObject {
     public String payUrl;
     public RealmList<BillNote> notes;
     public RealmList<BillPaid> paidDates;
+    public boolean deleted = false;
 
     public Bill() {
 
@@ -50,6 +51,7 @@ public class Bill extends RealmObject {
                 ", payUrl='" + payUrl + '\'' +
                 ", notes=" + notes +
                 ", paidDates=" + paidDates +
+                ", deleted=" + deleted +
                 '}';
     }
 
@@ -115,5 +117,13 @@ public class Bill extends RealmObject {
 
     public void setPaidDates(RealmList<BillPaid> paidDates) {
         this.paidDates = paidDates;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

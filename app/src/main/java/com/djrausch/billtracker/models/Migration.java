@@ -27,5 +27,10 @@ public class Migration implements RealmMigration {
                     .addRealmListField("paidDates", schema.get("BillPaid"));
             oldVersion++;
         }
+        if (oldVersion == 2) {
+            schema.get("Bill")
+                    .addField("deleted", boolean.class);
+            oldVersion++;
+        }
     }
 }

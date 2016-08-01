@@ -33,7 +33,7 @@ public class BillTrackerApplication extends Application {
 
     public static Realm getRealm() {
         if (realm == null) {
-            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context).schemaVersion(2)
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context).schemaVersion(3)
                     .migration(new Migration())
                     .build();
             realm = Realm.getInstance(realmConfiguration);

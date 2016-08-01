@@ -46,7 +46,7 @@ public class BillApi {
             @Override
             public void onResponse(Call<List<Bill>> call, final Response<List<Bill>> response) {
                 for (Bill b : response.body()) {
-                    Log.d("Bill", b.getUuid());
+                    Log.d("Bill", b.toString());
                 }
                 BillTrackerApplication.getRealm().executeTransaction(new Realm.Transaction() {
                     @Override
@@ -58,7 +58,7 @@ public class BillApi {
 
             @Override
             public void onFailure(Call<List<Bill>> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }
@@ -111,7 +111,9 @@ public class BillApi {
         apiService.deleteBill(billUuid, BillTrackerApplication.getUserToken()).enqueue(new Callback<Bill>() {
             @Override
             public void onResponse(Call<Bill> call, Response<Bill> response) {
-                Log.d("delete-onResponse", response.body().toString());
+                if(response.body() != null) {
+                    Log.d("delete-onResponse", response.body().toString());
+                }
             }
 
             @Override
