@@ -142,6 +142,7 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
     @Override
     public void showLoginSuccess(String token) {
         BillTrackerApplication.setUserToken(token);
+        Log.d("BToken", token);
         BillApi.getUserBills();
         finish();
     }

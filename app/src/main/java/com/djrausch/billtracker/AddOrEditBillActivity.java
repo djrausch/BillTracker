@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.djrausch.billtracker.adapters.RepeatingSpinnerAdapter;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.models.RepeatingItem;
+import com.djrausch.billtracker.network.controllers.BillApi;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
@@ -161,6 +162,9 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                         realm.copyToRealm(b);
                     }
                 });
+                if (!BillTrackerApplication.getUserToken().equals("")) {
+                    BillApi.createNewBill(b);
+                }
             }
 
             Intent intent = new Intent();

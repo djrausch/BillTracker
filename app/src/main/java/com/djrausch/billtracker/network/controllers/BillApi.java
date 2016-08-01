@@ -1,5 +1,7 @@
 package com.djrausch.billtracker.network.controllers;
 
+import android.util.Log;
+
 import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.network.NetworkConfig;
@@ -41,6 +43,20 @@ public class BillApi {
 
             @Override
             public void onFailure(Call<List<Bill>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void createNewBill(Bill bill) {
+        apiService.createNewBill(BillTrackerApplication.getUserToken(), bill).enqueue(new Callback<Bill>() {
+            @Override
+            public void onResponse(Call<Bill> call, Response<Bill> response) {
+                Log.d("onResponse", "Code: " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Bill> call, Throwable t) {
 
             }
         });
