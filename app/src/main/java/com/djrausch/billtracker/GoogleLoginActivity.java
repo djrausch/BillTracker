@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.presenters.GoogleLoginPresenter;
 import com.djrausch.billtracker.views.GoogleLoginView;
 import com.google.android.gms.auth.api.Auth;
@@ -141,6 +142,7 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
     @Override
     public void showLoginSuccess(String token) {
         BillTrackerApplication.setUserToken(token);
+        BillApi.getUserBills();
         finish();
     }
 
