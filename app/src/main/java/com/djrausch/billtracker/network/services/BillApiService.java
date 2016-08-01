@@ -23,4 +23,7 @@ public interface BillApiService {
     @FormUrlEncoded
     @POST("api/bills/{uuid}/update")
     Call<Bill> updateBill(@Path("uuid") String uuid, @Query("token") String token, @Field("name") String name, @Field("description") String description, @Field("repeating_type") int repeatingType, @Field("due_date") String dueDate, @Field("pay_url") String payUrl);
+
+    @POST("api/bills/{uuid}/delete")
+    Call<Bill> deleteBill(@Path("uuid") String uuid, @Query("token") String token);
 }

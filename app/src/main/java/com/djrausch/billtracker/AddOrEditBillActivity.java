@@ -204,6 +204,10 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     }
 
     private void deleteBill(final Bill bill) {
+        if (!BillTrackerApplication.getUserToken().equals("")) {
+            BillApi.deleteBill(bill.uuid);
+        }
+
         BillTrackerApplication.getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

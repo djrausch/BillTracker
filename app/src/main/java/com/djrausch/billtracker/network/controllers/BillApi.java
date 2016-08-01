@@ -12,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -24,7 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static okhttp3.logging.HttpLoggingInterceptor.*;
+import static okhttp3.logging.HttpLoggingInterceptor.Level;
 
 public class BillApi {
     static Gson gson = new GsonBuilder()
@@ -104,6 +103,20 @@ public class BillApi {
             @Override
             public void onFailure(Call<Bill> call, Throwable t) {
                 t.printStackTrace();
+            }
+        });
+    }
+
+    public static void deleteBill(String billUuid) {
+        apiService.deleteBill(billUuid, BillTrackerApplication.getUserToken()).enqueue(new Callback<Bill>() {
+            @Override
+            public void onResponse(Call<Bill> call, Response<Bill> response) {
+                Log.d("delete-onResponse", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Bill> call, Throwable t) {
+
             }
         });
     }
