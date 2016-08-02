@@ -15,14 +15,16 @@ import io.realm.RealmResults;
  * Created by white on 7/25/2016.
  */
 public class BillUtil {
-    public static void markBillPaid(final Bill bill) {
+    public static BillPaid markBillPaid(final Bill bill) {
+        final BillPaid billPaid = new BillPaid(new Date());
         BillTrackerApplication.getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 bill.setDueDate(DateUtil.createNextDueDate(bill));
-                bill.getPaidDates().add(new BillPaid(new Date()));
+                bill.getPaidDates().add(billPaid);
             }
         });
+        return billPaid;
     }
 
     public static void undoMarkBillPaid(final Date date, final Bill bill) {

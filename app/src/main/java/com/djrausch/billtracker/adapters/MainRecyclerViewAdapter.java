@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.R;
 import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.models.BillPaid;
+import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -76,9 +79,9 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         Date oldDate = getData().get(position).getDueDate();
 
         Bill bill = getData().get(position);
-        BillUtil.markBillPaid(bill);
+        BillPaid billPaid = BillUtil.markBillPaid(bill);
 
-        EventBus.getDefault().post(new BillSwipedEvent(oldDate, bill));
+        EventBus.getDefault().post(new BillSwipedEvent(oldDate, bill,billPaid));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {

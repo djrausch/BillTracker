@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.models.BillPaid;
 import com.djrausch.billtracker.network.NetworkConfig;
 import com.djrausch.billtracker.network.services.BillApiService;
 import com.google.gson.Gson;
@@ -111,13 +112,29 @@ public class BillApi {
         apiService.deleteBill(billUuid, BillTrackerApplication.getUserToken()).enqueue(new Callback<Bill>() {
             @Override
             public void onResponse(Call<Bill> call, Response<Bill> response) {
-                if(response.body() != null) {
+                if (response.body() != null) {
                     Log.d("delete-onResponse", response.body().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<Bill> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void markBillPaid(String billUuid, BillPaid billPaid) {
+        apiService.createBillPaid(billUuid, BillTrackerApplication.getUserToken(), billPaid.uuid, new DateTime(billPaid.date).toString("yyyy-MM-dd HH:mm:ss")).enqueue(new Callback<BillPaid>() {
+            @Override
+            public void onResponse(Call<BillPaid> call, Response<BillPaid> response) {
+                if (response.body() != null) {
+                    Log.d("billPaid-onResponse", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BillPaid> call, Throwable t) {
 
             }
         });

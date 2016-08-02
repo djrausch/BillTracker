@@ -21,6 +21,7 @@ import com.djrausch.billtracker.itemtouchhelpers.ItemClickSupport;
 import com.djrausch.billtracker.itemtouchhelpers.OnStartDragListener;
 import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -118,6 +119,17 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
             public void onClick(View v) {
                 BillUtil.undoMarkBillPaid(billSwipedEvent.oldDate, billSwipedEvent.bill);
             }
+        }).setCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                super.onDismissed(snackbar, event);
+                if (event == DISMISS_EVENT_SWIPE || event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_CONSECUTIVE) {
+                    //Snackbar has been closed meaning bill has been updated.
+                    if (!BillTrackerApplication.getUserToken().equals("")) {
+                        BillApi.markBillPaid(billSwipedEvent.bill.uuid, billSwipedEvent.billPaid);
+                    }
+                }
+            }
         }).show();
     }
 
@@ -133,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
-        } else if(id == R.id.action_login){
+        } else if (id == R.id.action_login) {
             startActivity(new Intent(MainActivity.this, GoogleLoginActivity.class));
         }
 

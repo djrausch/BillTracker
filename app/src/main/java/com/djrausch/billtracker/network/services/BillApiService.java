@@ -1,6 +1,7 @@
 package com.djrausch.billtracker.network.services;
 
 import com.djrausch.billtracker.models.Bill;
+import com.djrausch.billtracker.models.BillPaid;
 
 import java.util.List;
 
@@ -26,4 +27,8 @@ public interface BillApiService {
 
     @POST("api/bills/{uuid}/delete")
     Call<Bill> deleteBill(@Path("uuid") String uuid, @Query("token") String token);
+
+    @FormUrlEncoded
+    @POST("api/bills/{billUuid}/paid")
+    Call<BillPaid> createBillPaid(@Path("billUuid") String billUuid, @Query("token") String token, @Field("uuid") String uuid, @Field("paid_date") String paidDate);
 }
