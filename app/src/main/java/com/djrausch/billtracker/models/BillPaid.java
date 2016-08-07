@@ -1,5 +1,7 @@
 package com.djrausch.billtracker.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,6 +14,7 @@ import io.realm.annotations.PrimaryKey;
 public class BillPaid extends RealmObject {
     @PrimaryKey
     public String uuid;
+    @SerializedName("paid_date")
     public Date date;
 
     public BillPaid() {

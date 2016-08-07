@@ -24,6 +24,7 @@ public class Bill extends RealmObject {
     @SerializedName("pay_url")
     public String payUrl;
     public RealmList<BillNote> notes;
+    @SerializedName("paid_dates")
     public RealmList<BillPaid> paidDates;
     public boolean deleted = false;
 
