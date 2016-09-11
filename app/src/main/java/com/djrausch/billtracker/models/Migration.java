@@ -34,7 +34,7 @@ public class Migration implements RealmMigration {
         }
         if (oldVersion == 3){
             schema.get("Bill")
-                    .addField("amountDue", int.class);
+                    .addField("amountDue", float.class);
             oldVersion++;
         }
     }

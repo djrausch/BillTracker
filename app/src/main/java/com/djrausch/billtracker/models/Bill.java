@@ -28,13 +28,13 @@ public class Bill extends RealmObject {
     public RealmList<BillPaid> paidDates;
     public boolean deleted = false;
     @SerializedName("amount_due")
-    public int amountDue = 0;
+    public float amountDue = 0.00f;
 
     public Bill() {
 
     }
 
-    public Bill(String name, String description, int repeatingType, Date dueDate, String payUrl, int amountDue) {
+    public Bill(String name, String description, int repeatingType, Date dueDate, String payUrl, float amountDue) {
         this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
@@ -132,7 +132,7 @@ public class Bill extends RealmObject {
         this.deleted = deleted;
     }
 
-    public int getAmountDue() {
+    public float getAmountDue() {
         return amountDue;
     }
 
