@@ -21,12 +21,13 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         <RelativeLayout
-            android:id="@+id/due_soon"
+            android:id="@+id/bill_peek"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/colorPrimary">
 
             <TextView
+                android:id="@+id/total_due_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

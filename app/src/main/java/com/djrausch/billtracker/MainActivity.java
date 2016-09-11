@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
 import com.djrausch.billtracker.events.BillSwipedEvent;
@@ -26,6 +28,10 @@ import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.joda.time.DateTime;
+
+import java.text.NumberFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
     RecyclerView recyclerView;
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.total_due_text)
+    TextView totalDueTextView;
+    @BindView(R.id.bill_peek)
+    RelativeLayout billPeek;
 
     private MainRecyclerViewAdapter adapter;
     private ItemTouchHelper itemTouchHelper;
@@ -56,6 +66,25 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
         setClickListeners();
         configureRecyclerView();
+        configureBillPeek();
+    }
+
+    private void configureBillPeek() {
+        RealmResults<Bill> upcomingBills = BillTrackerApplication.getRealm().where(Bill.class).equalTo("deleted", false).between("dueDate", new Date(), new DateTime().plusWeeks(1).toDate()).findAllSorted("dueDate");
+
+        int totalDue = 0;
+
+        for (Bill b : upcomingBills) {
+            if (b.amountDue > 0) {
+                totalDue += b.amountDue;
+            }
+        }
+        if (totalDue > 0) {
+            billPeek.setVisibility(View.VISIBLE);
+            totalDueTextView.setText("Total due in next 7 days: " + NumberFormat.getCurrencyInstance().format(totalDue / 100));
+        } else {
+            billPeek.setVisibility(View.GONE);
+        }
     }
 
     private void setClickListeners() {
