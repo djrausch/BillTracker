@@ -86,7 +86,7 @@ public class BillApi {
     public static void updateBill(Bill bill) {
         Log.d("UpdateBill", bill.toString());
         //ill.name, bill.description, bill.repeatingType, new Date(), bill.payUrl
-        apiService.updateBill(bill.uuid, BillTrackerApplication.getUserToken(), bill.name, bill.description, bill.repeatingType, new DateTime(bill.dueDate).toString("yyyy-MM-dd HH:mm:ss"), bill.payUrl).enqueue(new Callback<Bill>() {
+        apiService.updateBill(bill.uuid, BillTrackerApplication.getUserToken(), bill.name, bill.description, bill.repeatingType, new DateTime(bill.dueDate).toString("yyyy-MM-dd HH:mm:ss"), bill.payUrl, bill.amountDue).enqueue(new Callback<Bill>() {
             @Override
             public void onResponse(Call<Bill> call, Response<Bill> response) {
                 Log.d("Update-onResponse", "Code: " + response.code());

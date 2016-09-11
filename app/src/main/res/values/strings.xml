@@ -105,6 +105,7 @@
     <string name="internal_preference_file_key">internal_settings</string>
     <string name="user_token">user_token</string>
     <string name="amount">Amount</string>
+    <string name="bill_peek_upcoming">"Total due in next 7 days: %s</string>
 
 
 </resources>

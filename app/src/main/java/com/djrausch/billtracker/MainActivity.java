@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         }
         if (totalDue > 0) {
             billPeek.setVisibility(View.VISIBLE);
-            totalDueTextView.setText("Total due in next 7 days: " + NumberFormat.getCurrencyInstance().format(totalDue / 100));
+            totalDueTextView.setText(getString(R.string.bill_peek_upcoming, NumberFormat.getCurrencyInstance().format(totalDue / 100)));
         } else {
             billPeek.setVisibility(View.GONE);
         }
