@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import java.text.NumberFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -52,7 +53,7 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         int days = Days.daysBetween(new DateTime(), dateTime).getDays();
 
         if (bill.amountDue > 0) {
-            String amountDue = "$"+bill.amountDue;
+            String amountDue = NumberFormat.getCurrencyInstance().format(bill.amountDue/100);
             holder.amountAndDueDate.setText(String.format("%s on %s", amountDue, dateTime.toString("MMMM d")));
         } else {
             holder.amountAndDueDate.setText(dateTime.toString("MMMM d"));

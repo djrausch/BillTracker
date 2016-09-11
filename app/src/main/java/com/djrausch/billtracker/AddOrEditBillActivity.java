@@ -18,6 +18,7 @@ import com.djrausch.billtracker.adapters.RepeatingSpinnerAdapter;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.models.RepeatingItem;
 import com.djrausch.billtracker.network.controllers.BillApi;
+import com.djrausch.currencyedittext.CurrencyEditText;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
@@ -39,6 +40,8 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
     public EditText payUrl;
     @BindView(R.id.due_date_select)
     public TextView dueDateSelect;
+    @BindView(R.id.amount)
+    public CurrencyEditText amount;
 
 
     private RepeatingItem repeatingItem;
@@ -126,6 +129,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
         repeatingItem = new RepeatingItem("", editBill.getRepeatingType());
         repeatingSpinner.setSelection(repeatingItem.toIndex());
         payUrl.setText(editBill.getPayUrl());
+        amount.setText(editBill.amountDue + "");
     }
 
     @Override
@@ -153,6 +157,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                         editBill.setRepeatingType(repeatingItem.code);
                         editBill.setDueDate(selectedDueDate.toDate());
                         editBill.setPayUrl(payUrl.getText().toString());
+                        editBill.setAmountDue((int) amount.getValue() * 100);
                     }
                 });
                 if (!BillTrackerApplication.getUserToken().equals("")) {
@@ -161,7 +166,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                     BillApi.updateBill(editBill);
                 }
             } else {
-                final Bill b = new Bill(name.getText().toString(), "", repeatingItem.code, selectedDueDate.toDate(), payUrl.getText().toString(),100);
+                final Bill b = new Bill(name.getText().toString(), "", repeatingItem.code, selectedDueDate.toDate(), payUrl.getText().toString(), (int) (amount.getValue() * 100));
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
