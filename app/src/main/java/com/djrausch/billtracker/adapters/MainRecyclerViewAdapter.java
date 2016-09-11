@@ -9,14 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.R;
 import com.djrausch.billtracker.events.BillSwipedEvent;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperAdapter;
 import com.djrausch.billtracker.itemtouchhelpers.ItemTouchHelperViewHolder;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.models.BillPaid;
-import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.util.BillUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,7 +51,12 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         DateTime dateTime = new DateTime(bill.getDueDate());
         int days = Days.daysBetween(new DateTime(), dateTime).getDays();
 
-        holder.dueDate.setText(dateTime.toString("MMMM d"));
+        if (bill.amountDue > 0) {
+            String amountDue = "$"+bill.amountDue;
+            holder.amountAndDueDate.setText(String.format("%s on %s", amountDue, dateTime.toString("MMMM d")));
+        } else {
+            holder.amountAndDueDate.setText(dateTime.toString("MMMM d"));
+        }
 
         if (days < 0) {
             holder.card.setCardBackgroundColor(Color.parseColor("#E57373"));
@@ -81,7 +84,7 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         Bill bill = getData().get(position);
         BillPaid billPaid = BillUtil.markBillPaid(bill);
 
-        EventBus.getDefault().post(new BillSwipedEvent(oldDate, bill,billPaid));
+        EventBus.getDefault().post(new BillSwipedEvent(oldDate, bill, billPaid));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
@@ -94,8 +97,8 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         @BindView(R.id.due_in_days)
         public TextView dueInDays;
 
-        @BindView(R.id.due_date)
-        public TextView dueDate;
+        @BindView(R.id.amount_and_due_date)
+        public TextView amountAndDueDate;
 
         @BindView(R.id.due_top_label)
         public TextView dueTopLabel;

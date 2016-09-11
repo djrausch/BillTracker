@@ -35,7 +35,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="26sp" />
                 <TextView
-                    android:id="@+id/due_date"
+                    android:id="@+id/amount_and_due_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
