@@ -17,7 +17,23 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <RelativeLayout
+            android:id="@+id/due_soon"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="Total due in next 7 days: $200"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
 
