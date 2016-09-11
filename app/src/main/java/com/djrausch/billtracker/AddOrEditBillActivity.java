@@ -161,7 +161,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                     BillApi.updateBill(editBill);
                 }
             } else {
-                final Bill b = new Bill(name.getText().toString(), "", repeatingItem.code, selectedDueDate.toDate(), payUrl.getText().toString());
+                final Bill b = new Bill(name.getText().toString(), "", repeatingItem.code, selectedDueDate.toDate(), payUrl.getText().toString(),100);
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {

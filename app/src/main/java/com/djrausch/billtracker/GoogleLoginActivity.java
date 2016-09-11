@@ -144,6 +144,7 @@ public class GoogleLoginActivity extends MvpActivity<GoogleLoginView, GoogleLogi
         BillTrackerApplication.setUserToken(token);
         Log.d("BToken", token);
         BillApi.getUserBills();
+        hideProgressDialog();
         finish();
     }
 
