@@ -27,18 +27,21 @@ public class Bill extends RealmObject {
     @SerializedName("paid_dates")
     public RealmList<BillPaid> paidDates;
     public boolean deleted = false;
+    @SerializedName("amount_due")
+    public int amountDue = 0;
 
     public Bill() {
 
     }
 
-    public Bill(String name, String description, int repeatingType, Date dueDate, String payUrl) {
+    public Bill(String name, String description, int repeatingType, Date dueDate, String payUrl, int amountDue) {
         this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.repeatingType = repeatingType;
         this.dueDate = dueDate;
         this.payUrl = payUrl;
+        this.amountDue = amountDue;
     }
 
     @Override
@@ -53,6 +56,7 @@ public class Bill extends RealmObject {
                 ", notes=" + notes +
                 ", paidDates=" + paidDates +
                 ", deleted=" + deleted +
+                ", amountDue=" + amountDue +
                 '}';
     }
 
@@ -126,5 +130,13 @@ public class Bill extends RealmObject {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public int getAmountDue() {
+        return amountDue;
+    }
+
+    public void setAmountDue(int amountDue) {
+        this.amountDue = amountDue;
     }
 }
