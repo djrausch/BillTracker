@@ -53,6 +53,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.github.djrausch:CurrencyEditText:1.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
