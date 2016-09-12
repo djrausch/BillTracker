@@ -66,22 +66,29 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
         setClickListeners();
         configureRecyclerView();
-        configureBillPeek();
     }
 
     private void configureBillPeek() {
-        RealmResults<Bill> upcomingBills = BillTrackerApplication.getRealm().where(Bill.class).equalTo("deleted", false).between("dueDate", new Date(), new DateTime().plusWeeks(1).toDate()).findAllSorted("dueDate");
+        if (BillTrackerApplication.isBillPeekEnabled()) {
+            int daysAhead = BillTrackerApplication.getBillPeekDays();
 
-        int totalDue = 0;
+            RealmResults<Bill> upcomingBills = BillTrackerApplication.getRealm().where(Bill.class).equalTo("deleted", false).between("dueDate", new Date(), new DateTime().plusDays(daysAhead).toDate()).findAllSorted("dueDate");
 
-        for (Bill b : upcomingBills) {
-            if (b.amountDue > 0) {
-                totalDue += b.amountDue;
+            int totalDue = 0;
+
+            for (Bill b : upcomingBills) {
+                if (b.amountDue > 0) {
+                    totalDue += b.amountDue;
+                }
             }
-        }
-        if (totalDue > 0) {
-            billPeek.setVisibility(View.VISIBLE);
-            totalDueTextView.setText(getString(R.string.bill_peek_upcoming, NumberFormat.getCurrencyInstance().format(totalDue / 100)));
+
+            if (totalDue > 0) {
+                billPeek.setVisibility(View.VISIBLE);
+                totalDueTextView.setText(getString(R.string.bill_peek_upcoming, daysAhead, NumberFormat.getCurrencyInstance().format(totalDue / 100)));
+            } else {
+                billPeek.setVisibility(View.GONE);
+            }
+
         } else {
             billPeek.setVisibility(View.GONE);
         }
@@ -196,6 +203,12 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        configureBillPeek();
     }
 
 

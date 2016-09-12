@@ -3,6 +3,8 @@ package com.djrausch.billtracker;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.IntegerRes;
 import android.util.Log;
 
 import com.bugsnag.android.Bugsnag;
@@ -69,5 +71,15 @@ public class BillTrackerApplication extends Application {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.internal_preference_file_key), Context.MODE_PRIVATE);
         return sharedPref.getString(context.getString(R.string.user_token), "");
+    }
+
+    public static boolean isBillPeekEnabled() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getBoolean("bill_peek_enabled", true);
+    }
+
+    public static int getBillPeekDays() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return Integer.parseInt(sharedPref.getString("bill_peek_days", "7"));
     }
 }
