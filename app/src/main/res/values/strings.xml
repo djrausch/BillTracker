@@ -86,6 +86,8 @@
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_bill_peek">Bill Peek</string>
+
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
 
@@ -106,6 +108,8 @@
     <string name="user_token">user_token</string>
     <string name="amount">Amount</string>
     <string name="bill_peek_upcoming">"Total due in next 7 days: %s</string>
+    <string name="bill_peek">Bill Peek</string>
+    <string name="bill_peek_summ">Show a preview of your upcoming total balance due.</string>
 
 
 </resources>

@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- A 'parent' preference, which enables/disables child preferences (below)
+         when checked/unchecked. -->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="bill_peek_enabled"
+        android:summary="@string/bill_peek_summ"
+        android:title="@string/bill_peek" />
+
+    <EditTextPreference
+        android:dependency="bill_peek_enabled"
+        android:title="Days Ahead"
+        android:summary="The amount of days to look ahead for Bill Peek"
+        android:key="bill_peek_days"
+        android:defaultValue="7"
+        android:inputType="number" />
+
+</PreferenceScreen>
