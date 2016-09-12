@@ -14,7 +14,7 @@
 
     <header
         android:fragment="com.djrausch.billtracker.SettingsActivity$BillPeekPreferenceFragment"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_action_turned_in"
         android:title="@string/pref_header_bill_peek" />
 
     <!--<header
