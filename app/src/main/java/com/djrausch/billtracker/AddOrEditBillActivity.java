@@ -129,7 +129,9 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
         repeatingItem = new RepeatingItem("", editBill.getRepeatingType());
         repeatingSpinner.setSelection(repeatingItem.toIndex());
         payUrl.setText(editBill.getPayUrl());
-        amount.setText(editBill.amountDue + "");
+        if (editBill.amountDue > 0) {
+            amount.setText(Integer.toString(editBill.amountDue));
+        }
     }
 
     @Override
