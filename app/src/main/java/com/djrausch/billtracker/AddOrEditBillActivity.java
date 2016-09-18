@@ -159,7 +159,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
                         editBill.setRepeatingType(repeatingItem.code);
                         editBill.setDueDate(selectedDueDate.toDate());
                         editBill.setPayUrl(payUrl.getText().toString());
-                        editBill.setAmountDue((int) amount.getValue() * 100);
+                        editBill.setAmountDue((int) (amount.getValue() * 100));
                     }
                 });
                 if (!BillTrackerApplication.getUserToken().equals("")) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class MainRecyclerViewAdapter extends RealmRecyclerViewAdapter<Bill, Main
         int days = Days.daysBetween(new DateTime(), dateTime).getDays();
 
         if (bill.amountDue > 0) {
-            String amountDue = NumberFormat.getCurrencyInstance().format(bill.amountDue/100);
+            String amountDue = NumberFormat.getCurrencyInstance().format(bill.amountDue / 100d);
             holder.amountAndDueDate.setText(String.format("%s on %s", amountDue, dateTime.toString("MMMM d")));
         } else {
             holder.amountAndDueDate.setText(dateTime.toString("MMMM d"));

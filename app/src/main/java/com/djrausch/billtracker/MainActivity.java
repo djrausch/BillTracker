@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
             if (totalDue > 0) {
                 billPeek.setVisibility(View.VISIBLE);
-                totalDueTextView.setText(getString(R.string.bill_peek_upcoming, daysAhead, NumberFormat.getCurrencyInstance().format(totalDue / 100)));
+                totalDueTextView.setText(getString(R.string.bill_peek_upcoming, daysAhead, NumberFormat.getCurrencyInstance().format(totalDue / 100d)));
             } else {
                 billPeek.setVisibility(View.GONE);
             }
