@@ -2,6 +2,7 @@ package com.djrausch.billtracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,12 +11,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
 import com.djrausch.billtracker.events.BillSwipedEvent;
@@ -26,6 +29,8 @@ import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.util.BillUtil;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,6 +46,7 @@ import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements OnStartDragListener {
 
+    private static final String TAG = "MainActivity";
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.no_bills)
@@ -69,6 +75,15 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
         setClickListeners();
         configureRecyclerView();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Intent i = new Intent(MainActivity.this, RegisterAccountActivity.class);
+            startActivity(i);
+            finish();
+        } else {
+            Toast.makeText(MainActivity.this, "Hello " + user.getDisplayName(), Toast.LENGTH_LONG).show();
+        }
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }

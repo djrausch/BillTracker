@@ -110,6 +110,11 @@
     <string name="bill_peek_upcoming">"Total due in next %1$d days: %2$s</string>
     <string name="bill_peek">Bill Peek</string>
     <string name="bill_peek_summ">Show a preview of your upcoming total balance due.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
 
 
 </resources>
