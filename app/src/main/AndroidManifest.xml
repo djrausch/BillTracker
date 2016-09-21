@@ -3,6 +3,9 @@
     package="com.djrausch.billtracker">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="21" />
 
     <application
         android:name=".BillTrackerApplication"
