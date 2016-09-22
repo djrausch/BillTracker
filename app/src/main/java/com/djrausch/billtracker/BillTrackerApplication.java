@@ -60,17 +60,15 @@ public class BillTrackerApplication extends Application {
     }
 
     public static void setUserToken(String token) {
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                context.getString(R.string.internal_preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(context.getString(R.string.user_token), token);
         editor.commit();
     }
 
     public static String getUserToken() {
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                context.getString(R.string.internal_preference_file_key), Context.MODE_PRIVATE);
-        return sharedPref.getString(context.getString(R.string.user_token), "");
+        SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
+        return preferences.getString(context.getString(R.string.user_token), "");
     }
 
     public static boolean isBillPeekEnabled() {
@@ -81,5 +79,18 @@ public class BillTrackerApplication extends Application {
     public static int getBillPeekDays() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return Integer.parseInt(sharedPref.getString("bill_peek_days", "7"));
+    }
+
+    public static void setSyncTime() {
+        long mills = System.currentTimeMillis();
+        SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("sync_time", mills);
+        editor.commit();
+    }
+
+    public static long getSyncTime() {
+        SharedPreferences preferences = context.getSharedPreferences("bill_tracker_internal_settings", Context.MODE_PRIVATE);
+        return preferences.getLong("sync_time", System.currentTimeMillis());
     }
 }
