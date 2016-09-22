@@ -29,8 +29,6 @@ import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.util.BillUtil;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -217,9 +215,9 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
-        } /*else if (id == R.id.action_login) {
+        } else if (id == R.id.action_login) {
             startActivity(new Intent(MainActivity.this, GoogleLoginActivity.class));
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
