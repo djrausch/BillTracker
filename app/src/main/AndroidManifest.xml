@@ -59,8 +59,6 @@
             android:name=".ViewBillDetails"
             android:label="Bill Details"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".RegisterAccountActivity" />
-        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

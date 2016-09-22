@@ -54,7 +54,6 @@ dependencies {
     compile 'com.google.firebase:firebase-core:9.4.0'
     compile 'com.google.firebase:firebase-messaging:9.4.0'
     compile 'com.google.firebase:firebase-crash:9.4.0'
-    compile 'com.google.firebase:firebase-auth:9.4.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
 }

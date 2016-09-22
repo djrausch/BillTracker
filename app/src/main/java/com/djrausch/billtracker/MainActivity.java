@@ -76,15 +76,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         setClickListeners();
         configureRecyclerView();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Intent i = new Intent(MainActivity.this, RegisterAccountActivity.class);
-            startActivity(i);
-            finish();
-        } else {
-            Toast.makeText(MainActivity.this, "Hello " + user.getDisplayName(), Toast.LENGTH_LONG).show();
-        }
-
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
