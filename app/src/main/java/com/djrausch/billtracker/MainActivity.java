@@ -2,7 +2,6 @@ package com.djrausch.billtracker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,14 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.djrausch.billtracker.adapters.MainRecyclerViewAdapter;
 import com.djrausch.billtracker.events.BillSwipedEvent;
@@ -28,7 +25,6 @@ import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.util.BillUtil;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
     private MainRecyclerViewAdapter adapter;
     private ItemTouchHelper itemTouchHelper;
 
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         setClickListeners();
         configureRecyclerView();
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     private void configureBillPeek() {
@@ -108,9 +102,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putString("add_type", "fab");
-                mFirebaseAnalytics.logEvent("add_bill", b);
                 startActivity(i);
             }
         });
@@ -118,9 +109,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         noBillsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putString("add_type", "no_bill_view");
-                mFirebaseAnalytics.logEvent("add_bill", b);
                 startActivity(i);
             }
         });
@@ -155,9 +143,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Bundle b = new Bundle();
-                b.putString("position", String.valueOf(position));
-                mFirebaseAnalytics.logEvent("edit_bill", b);
 
                 Intent i = new Intent(MainActivity.this, ViewBillDetails.class);
                 i.putExtra("edit", true);
@@ -169,16 +154,9 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
     @Subscribe
     public void onBillSwiped(final BillSwipedEvent billSwipedEvent) {
-        Bundle b = new Bundle();
-        b.putString("confirmation_type", "bill_swiped");
-        mFirebaseAnalytics.logEvent("bill_paid", b);
-
         Snackbar.make(coordinatorLayout, getString(R.string.snackbar_bill_paid, billSwipedEvent.bill.getName()), Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putString("undo", "undo");
-                mFirebaseAnalytics.logEvent("undo_pay", b);
                 BillUtil.undoMarkBillPaid(billSwipedEvent.oldDate, billSwipedEvent.bill);
             }
         }).setCallback(new Snackbar.Callback() {
@@ -186,10 +164,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
             public void onDismissed(Snackbar snackbar, int event) {
                 super.onDismissed(snackbar, event);
                 if (event == DISMISS_EVENT_SWIPE || event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_CONSECUTIVE) {
-                    Bundle b = new Bundle();
-                    b.putString("confirmation_type", "snackbar_dismiss");
-                    mFirebaseAnalytics.logEvent("bill_paid", b);
-
                     //Snackbar has been closed meaning bill has been updated.
                     if (!BillTrackerApplication.getUserToken().equals("")) {
                         BillApi.markBillPaid(billSwipedEvent.bill.uuid, billSwipedEvent.billPaid);
@@ -209,15 +183,11 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Bundle b = new Bundle();
-            b.putString("settings", "menu");
-            mFirebaseAnalytics.logEvent("settings", b);
-
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
-        } else if (id == R.id.action_login) {
+        }/* else if (id == R.id.action_login) {
             startActivity(new Intent(MainActivity.this, GoogleLoginActivity.class));
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

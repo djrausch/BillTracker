@@ -4,13 +4,11 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.djrausch.billtracker.BillTrackerApplication;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.util.BillNotificationManager;
 import com.djrausch.billtracker.util.BillUtil;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Created by white on 7/26/2016.
@@ -29,11 +27,6 @@ public class NotificationReceiver extends BroadcastReceiver {
             Bill bill = BillTrackerApplication.getRealm().where(Bill.class).contains("uuid", billUuid).findFirst();
 
             if (action.equals(BillNotificationManager.ACTION_MARK_BILL_PAID)) {
-                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                Bundle b = new Bundle();
-                b.putString("bill_paid", "notification");
-                firebaseAnalytics.logEvent("bill_paid", b);
-
                 BillUtil.markBillPaid(bill);
 
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
