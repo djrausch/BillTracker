@@ -10,6 +10,7 @@ import android.util.Log;
 import com.bugsnag.android.Bugsnag;
 import com.djrausch.billtracker.models.Migration;
 import com.djrausch.billtracker.util.AlarmUtil;
+import com.facebook.ads.AdSettings;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -31,6 +32,7 @@ public class BillTrackerApplication extends Application {
         if (!isAlarmSet()) {
             AlarmUtil.setDailyAlarm(context);
         }
+        AdSettings.addTestDevice("47ff68386d22cf5cb83b1e0372fd36e0");
     }
 
     public static Realm getRealm() {

@@ -7,11 +7,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.djrausch.billtracker.adapters.PaidDateRecyclerViewAdapter;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.models.RepeatingItem;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 
 import org.joda.time.DateTime;
 
@@ -36,6 +40,7 @@ public class ViewBillDetails extends AppCompatActivity {
     public TextView repeat;
     @BindView(R.id.bill_next_due)
     public TextView due;
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,12 @@ public class ViewBillDetails extends AppCompatActivity {
         ButterKnife.bind(this);
 
         loadBillAndListen();
+
+        RelativeLayout adViewContainer = (RelativeLayout) findViewById(R.id.adViewContainer);
+
+        adView = new AdView(this, "316563612047695_316574695379920", AdSize.BANNER_320_50);
+        adViewContainer.addView(adView);
+        adView.loadAd();
     }
 
     private void loadBillAndListen() {

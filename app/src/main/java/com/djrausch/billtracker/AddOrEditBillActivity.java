@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,6 +20,9 @@ import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.models.RepeatingItem;
 import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.currencyedittext.CurrencyEditText;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
@@ -50,6 +54,7 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
 
     private boolean editing = false;
     private Bill editBill;
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,14 @@ public class AddOrEditBillActivity extends AppCompatActivity implements DatePick
 
         configureRepeatingSpinner();
         checkIfEditing();
+
+        AdSettings.addTestDevice("47ff68386d22cf5cb83b1e0372fd36e0");
+
+        RelativeLayout adViewContainer = (RelativeLayout) findViewById(R.id.adViewContainer);
+
+        adView = new AdView(this, "316563612047695_316563782047678", AdSize.BANNER_320_50);
+        adViewContainer.addView(adView);
+        adView.loadAd();
 
     }
 

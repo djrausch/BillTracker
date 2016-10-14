@@ -25,6 +25,9 @@ import com.djrausch.billtracker.itemtouchhelpers.SimpleItemTouchHelperCallback;
 import com.djrausch.billtracker.models.Bill;
 import com.djrausch.billtracker.network.controllers.BillApi;
 import com.djrausch.billtracker.util.BillUtil;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
     private MainRecyclerViewAdapter adapter;
     private ItemTouchHelper itemTouchHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements OnStartDragListen
 
         setClickListeners();
         configureRecyclerView();
-
     }
 
     private void configureBillPeek() {

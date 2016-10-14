@@ -53,4 +53,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile ('com.github.djrausch:CurrencyEditText:dev-SNAPSHOT'){ changing = true }
 
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.facebook.android:audience-network-sdk:4.+'
 }
